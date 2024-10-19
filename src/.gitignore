@@ -1,0 +1,29 @@
+# Ignore Gradle files
+.gradle
+/local.properties
+
+# Ignore IntelliJ/Android Studio project files
+/.idea
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore build outputs
+/build
+/captures
+
+# Ignore native build directories (CMake, ndk-build)
+.externalNativeBuild
+.cxx
+
+# Ignore generated local.properties (specific to your local machine)
+local.properties
+
+# Ignore Gradle wrapper files
+gradle-wrapper.jar

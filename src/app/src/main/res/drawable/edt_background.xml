@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Thẻ item đầu tiên không chứa drawable, cần xóa hoặc định nghĩa drawable -->
+    <item android:top="-3dp" android:bottom="-1dp" android:right="-3dp">
+        <shape android:shape="rectangle">
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+            <stroke android:width="2dp" android:color="#80D8FF"/> <!-- Đường viền -->
+            <corners android:radius="8dp"/> <!-- Góc bo tròn -->
+
+        </shape>
+    </item>
+
+</layer-list>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:fontFamily="casual"
+            android:text="Ngày"
+            android:textColor="#1E88E5"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edtDate_ngay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="date" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="0dp"
+            android:textColor="#1E88E5"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:fontFamily="casual"
+            android:text="Ghi Chú"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edt_ghichu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:layout_weight="1" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="0dp"
+            android:textColor="#1E88E5"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:fontFamily="casual"
+            android:text="Tiền chi"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edtNb_tienchi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="number" />
+
+    </TableRow>
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_marginTop="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Danh mục"
+        android:textSize="16dp"
+        android:paddingLeft="32dp"
+        android:fontFamily="casual"
+        android:textColor="#1E88E5"
+        android:textStyle="bold"/>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

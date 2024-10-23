@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.moneymate.R;
@@ -18,18 +19,21 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 import com.example.moneymate.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     // truy cập các View trong layout XML của mình mà không cần phải sử dụng findViewById()
     //bật viewBinding trong gradle module
     ActivityMainBinding binding;
+//    private BottomNavigationView bottomNavigationView;
+//    private FrameLayout frame_layout;
 
 
     @SuppressLint({"MissingInflatedId", "NonConstantResourceId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+
 
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
 //            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

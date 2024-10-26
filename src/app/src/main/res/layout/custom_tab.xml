@@ -1,0 +1,13 @@
+<!-- res/layout/custom_tab.xml -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/custom_tab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:fontFamily="casual"
+    android:padding="10dp"
+    android:text="Tiền chi"
+    android:textAlignment="center"
+    android:textAllCaps="false"
+    android:textColor="#1E88E5"
+    android:textSize="28sp"
+    android:textStyle="bold" />

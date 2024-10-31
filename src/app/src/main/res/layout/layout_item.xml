@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imgcaidat"
+        android:layout_width="95dp"
+        android:layout_height="56dp"
+        app:srcCompat="@drawable/caidat" />
+
+    <TextView
+        android:id="@+id/txtcaidat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="Cài đặt"
+        android:textColor="#061A85"
+        android:textColorLink="#071350"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+</LinearLayout>

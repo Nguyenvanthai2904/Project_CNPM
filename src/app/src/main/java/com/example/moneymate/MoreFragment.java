@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-
+import android.widget.AdapterView;
+import android.content.Intent;
 public class MoreFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
@@ -63,7 +64,33 @@ public class MoreFragment extends Fragment {
         lv = view.findViewById(R.id.lv);
         moremyarrrayadapter = new MoreMyArrayAdapter(getActivity(), R.layout.layout_item, mylist);
         lv.setAdapter(moremyarrrayadapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = mylist.get(position).getName(); // Lấy tên của mục được chọn
+                Intent myIntent;
 
+                switch (selectedItem) {
+                    case "Cài đặt":
+                        myIntent = new Intent(getActivity(), LoginActivity.class);
+                        break;
+                    case "Thay đổi màu":
+                        myIntent = new Intent(getActivity(), LoginActivity.class);
+                        break;
+                    case "Báo cáo":
+                        myIntent = new Intent(getActivity(), LoginActivity.class);
+                        break;
+                    case "Đăng xuất":
+                        myIntent = new Intent(getActivity(), LoginActivity.class);
+                        break;
+                    default:
+                        myIntent = new Intent(getActivity(), LoginActivity.class); // Activity mặc định
+                        break;
+                }
+
+                startActivity(myIntent);
+            }
+        });
         return view;
     }
 }

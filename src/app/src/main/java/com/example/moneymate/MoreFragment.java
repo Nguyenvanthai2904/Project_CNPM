@@ -14,11 +14,7 @@ import android.widget.AdapterView;
 import android.content.Intent;
 public class MoreFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
     int image[] = {R.drawable.caidat, R.drawable.thaydoimau, R.drawable.baocao, R.drawable.dangxuat};
     String name[] = {"Cài đặt", "Thay đổi màu", "Báo cáo", "Đăng xuất"};
     ArrayList<item> mylist;
@@ -29,23 +25,13 @@ public class MoreFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static MoreFragment newInstance(String param1, String param2) {
-        MoreFragment fragment = new MoreFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
 
         // Initialize the list of items
         mylist = new ArrayList<>();

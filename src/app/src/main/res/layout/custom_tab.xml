@@ -3,7 +3,7 @@
     android:id="@+id/custom_tab"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:fontFamily="casual"
+    android:fontFamily="sans-serif"
     android:padding="10dp"
     android:text="Tiền chi"
     android:textAlignment="center"

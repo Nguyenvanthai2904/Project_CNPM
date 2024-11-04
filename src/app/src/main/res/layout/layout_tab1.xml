@@ -23,7 +23,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:fontFamily="casual"
+                    android:fontFamily="sans-serif"
                     android:text="Ngày"
                     android:textAlignment="center"
                     android:textColor="@color/black"
@@ -49,7 +49,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:fontFamily="casual"
+                    android:fontFamily="sans-serif"
                     android:text="Ghi Chú"
                     android:textAlignment="center"
                     android:textColor="@color/black"
@@ -76,7 +76,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:fontFamily="casual"
+                    android:fontFamily="sans-serif"
                     android:text="Tiền chi"
                     android:textAlignment="center"
                     android:textColor="@color/black"
@@ -97,8 +97,8 @@
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:fontFamily="casual"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif"
                 android:paddingLeft="32dp"
                 android:text="Danh mục"
                 android:textColor="@color/black"
@@ -108,19 +108,23 @@
             <GridView
                 android:id="@+id/gv_tab1"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:layout_marginTop="32dp"
+                android:layout_height="370dp"
+                android:layout_marginTop="20dp"
                 android:numColumns="3"
                 android:verticalSpacing="16dp"
                 android:visibility="visible" />
 
             <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/btn_tienchi"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:fontFamily="sans-serif"
                 android:text="Nhập khoản tiền chi"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textAllCaps="true"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                />
 
         </LinearLayout>
     </ScrollView>

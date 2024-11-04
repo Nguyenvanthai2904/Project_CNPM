@@ -19,7 +19,6 @@
             android:layout_marginBottom="16dp"
             android:dateTextAppearance="?android:attr/textAppearanceLarge"
             android:firstDayOfWeek="2" />
-
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

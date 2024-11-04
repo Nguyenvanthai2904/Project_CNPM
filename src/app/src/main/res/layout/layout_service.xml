@@ -16,7 +16,7 @@
         android:id="@+id/txt_service"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="casual"
+        android:fontFamily="sans-serif"
         android:text="Giáo dục"
         android:textAlignment="center"
         android:textSize="16sp"

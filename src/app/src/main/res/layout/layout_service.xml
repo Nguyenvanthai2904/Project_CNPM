@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:text="Giáo dục"
+        android:textColor="#061A85"
         android:textAlignment="center"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="normal" />
 </LinearLayout>

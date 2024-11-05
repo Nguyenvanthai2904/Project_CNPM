@@ -1,12 +1,13 @@
 package com.example.moneymate;
 
 import android.content.Intent;
-import android.content.SharedPreferences; // Thêm dòng này
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,10 +15,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class LoginActivity extends AppCompatActivity {
-    EditText edt_email, edt_password;
-    Button btn_login, btn_facebook, btn_google;
-    TextView tv_register;
+    private EditText edt_email, edt_password;
+    private Button btn_login, btn_facebook, btn_google;
+    private TextView tv_register;
+
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,58 +35,81 @@ public class LoginActivity extends AppCompatActivity {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+            return WindowInsetsCompat.CONSUMED;
         });
 
-        edt_email = findViewById(R.id.edt_email);
-        edt_password = findViewById(R.id.edt_password);
+        // Khởi tạo Firebase Auth và Firestore
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        // Liên kết các view
+        edt_email = findViewById(R.id.edt_email); // Đảm bảo ID đúng
+        edt_password = findViewById(R.id.edt_password); // Đảm bảo ID đúng
         btn_facebook = findViewById(R.id.btn_facebook);
         btn_login = findViewById(R.id.btn_login);
         btn_google = findViewById(R.id.btn_google);
         tv_register = findViewById(R.id.tv_register);
 
-        // Thêm OnClickListener cho tv_register
-        tv_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent_signup = new Intent(LoginActivity.this, SignupActivity.class);
-                startActivity(intent_signup);
-            }
+        // OnClickListener cho TextView đăng ký
+        tv_register.setOnClickListener(view -> {
+            Intent intent_signup = new Intent(LoginActivity.this, SignupActivity.class);
+            startActivity(intent_signup);
         });
 
-        // Thêm OnClickListener cho btn_login
-//        btn_login.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // Giả lập quá trình xác thực (bạn có thể thay đổi theo logic của mình)
-//                String email = edt_email.getText().toString();
-//                String password = edt_password.getText().toString();
-//
-//                // Kiểm tra thông tin đăng nhập (thay thế với logic xác thực thực sự)
-//                if (email.equals("user@example.com") && password.equals("password")) {
-//                    // Khi người dùng đăng nhập thành công
-//                    SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                    editor.putBoolean("isLoggedIn", true); // Lưu trạng thái đã đăng nhập
-//                    editor.putString("username", email); // Lưu tên người dùng hoặc thông tin khác (nếu cần)
-//                    editor.apply(); // Áp dụng các thay đổi
-//
-//                    // Chuyển hướng đến MainActivity
-//                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                    startActivity(intent);
-//                    finish(); // Đóng LoginActivity nếu không cần quay lại
-//                } else {
-//                    // Hiển thị thông báo lỗi hoặc xử lý đăng nhập không thành công
-//                    // Bạn có thể sử dụng Toast hoặc AlertDialog
-//                }
-//            }
-//        });
-        btn_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+        // OnClickListener cho nút đăng nhập
+        btn_login.setOnClickListener(view -> loginUser());
+
+        // Bạn có thể thêm OnClickListener cho các nút Facebook và Google nếu đã tích hợp
+        // btn_facebook.setOnClickListener(...);
+        // btn_google.setOnClickListener(...);
+    }
+
+    private void loginUser() {
+        String email = edt_email.getText().toString().trim();
+        String password = edt_password.getText().toString().trim();
+
+        // Kiểm tra các trường nhập liệu
+        if (TextUtils.isEmpty(email)) {
+            edt_email.setError("Vui lòng nhập email");
+            return;
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            edt_password.setError("Vui lòng nhập mật khẩu");
+            return;
+        }
+
+        // Hiển thị thông báo đang đăng nhập
+        Toast.makeText(this, "Đang đăng nhập...", Toast.LENGTH_SHORT).show();
+
+        // Thực hiện đăng nhập với Firebase Authentication
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Đăng nhập thành công, chuyển hướng đến MainActivity
+                        FirebaseUser user = auth.getCurrentUser();
+                        if (user != null) {
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        }
+                    } else {
+                        // Đăng nhập thất bại, hiển thị thông báo lỗi
+                        Toast.makeText(LoginActivity.this, "Đăng nhập thất bại: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Kiểm tra nếu người dùng đã đăng nhập, tự động chuyển hướng đến MainActivity
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }

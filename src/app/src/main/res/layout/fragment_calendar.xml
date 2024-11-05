@@ -1,27 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CalendarFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="#F5F5F5"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <CalendarView
-            android:id="@+id/calendarView"
+        <!-- Container cho CalendarView với khung -->
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="16dp"
-            android:dateTextAppearance="?android:attr/textAppearanceLarge"
-            android:firstDayOfWeek="2" />
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/calendar_background"
+            android:padding="8dp">
+
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dateTextAppearance="@style/CalendarDateText"
+                android:firstDayOfWeek="2"
+                android:selectedDateVerticalBar="@drawable/selected_date_background"
+                android:weekDayTextAppearance="@style/CalendarWeekDayText" />
+        </FrameLayout>
+
+        <!-- ListView cho các sự kiện bên dưới -->
         <ListView
+            android:id="@+id/eventListView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="420dp"
+            android:background="@android:color/white"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp"
+            android:padding="8dp" />
     </LinearLayout>
 
-</FrameLayout>
+</ScrollView>

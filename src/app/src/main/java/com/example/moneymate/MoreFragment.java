@@ -12,8 +12,12 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import android.widget.AdapterView;
 import android.content.Intent;
-public class MoreFragment extends Fragment {
 
+import com.google.firebase.auth.FirebaseAuth;
+
+public class MoreFragment extends Fragment {
+    // Khai báo FirebaseAuth
+    private FirebaseAuth mAuth;
 
     int image[] = {R.drawable.caidat, R.drawable.thaydoimau, R.drawable.baocao, R.drawable.dangxuat};
     String name[] = {"Cài đặt", "Thay đổi màu", "Báo cáo", "Đăng xuất"};
@@ -38,6 +42,11 @@ public class MoreFragment extends Fragment {
         for (int i = 0; i < name.length; i++) {
             mylist.add(new item(image[i], name[i]));
         }
+
+        // Khởi tạo FirebaseAuth
+        mAuth = FirebaseAuth.getInstance();
+
+
     }
 
     @Override
@@ -67,7 +76,13 @@ public class MoreFragment extends Fragment {
                         myIntent = new Intent(getActivity(), LoginActivity.class);
                         break;
                     case "Đăng xuất":
+                        // Thực hiện đăng xuất
+                        mAuth.signOut();
+                        // Chuyển hướng đến LoginActivity
                         myIntent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(myIntent);
+                        // Kết thúc Fragment để ngăn người dùng quay lại
+                        getActivity().finish();
                         break;
                     default:
                         myIntent = new Intent(getActivity(), LoginActivity.class); // Activity mặc định

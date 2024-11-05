@@ -26,5 +26,5 @@
         android:textColor="#061A85"
         android:textColorLink="#071350"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="normal" />
 </LinearLayout>

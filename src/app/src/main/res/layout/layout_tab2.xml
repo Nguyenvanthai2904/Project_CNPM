@@ -26,9 +26,9 @@
                     android:fontFamily="sans-serif"
                     android:text="Ngày"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="#061A85"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="normal" />
 
                 <EditText
                     android:id="@+id/edtDate_ngay"
@@ -52,9 +52,9 @@
                     android:fontFamily="sans-serif"
                     android:text="Ghi Chú"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="#061A85"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="normal" />
 
                 <EditText
                     android:id="@+id/edt_ghichu"
@@ -79,9 +79,9 @@
                     android:fontFamily="sans-serif"
                     android:text="Tiền chi"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="#061A85"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="normal" />
 
                 <EditText
                     android:id="@+id/edtNb_tienchi"
@@ -101,9 +101,9 @@
                 android:fontFamily="sans-serif"
                 android:paddingLeft="32dp"
                 android:text="Danh mục"
-                android:textColor="@color/black"
+                android:textColor="#061A85"
                 android:textSize="16dp"
-                android:textStyle="bold" />
+                android:textStyle="normal" />
 
             <GridView
                 android:id="@+id/gv_tab2"

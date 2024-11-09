@@ -18,6 +18,8 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import android.widget.CheckBox;
+import android.text.InputType;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText edt_email, edt_password;
@@ -62,6 +64,34 @@ public class LoginActivity extends AppCompatActivity {
         // Bạn có thể thêm OnClickListener cho các nút Facebook và Google nếu đã tích hợp
         // btn_facebook.setOnClickListener(...);
         // btn_google.setOnClickListener(...);
+        CheckBox cbShowemail = findViewById(R.id.cbshowemail);
+
+        // Lắng nghe sự kiện thay đổi của CheckBox
+        cbShowemail.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // Hiển thị mật khẩu
+                edt_email.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            } else {
+                // Ẩn mật khẩu
+                edt_email.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            }
+            // Đặt con trỏ tại cuối văn bản
+            edt_email.setSelection(edt_email.getText().length());
+        });
+        CheckBox cbShowpassword = findViewById(R.id.cbshowpassword);
+
+        // Lắng nghe sự kiện thay đổi của CheckBox
+        cbShowpassword.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // Hiển thị mật khẩu
+                edt_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            } else {
+                // Ẩn mật khẩu
+                edt_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            }
+            // Đặt con trỏ tại cuối văn bản
+            edt_password.setSelection(edt_password.getText().length());
+        });
     }
 
     private void loginUser() {

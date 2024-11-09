@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
-        android:layout_height="313dp"
+        android:layout_height="247dp"
         android:scaleType="fitXY"
         android:src="@drawable/nen" />
 

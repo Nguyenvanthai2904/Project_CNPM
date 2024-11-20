@@ -3,17 +3,22 @@ package com.example.moneymate;
 import android.app.Activity;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
+import android.app.DatePickerDialog;
+
+import android.widget.EditText;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 
 
 public class Tab1Fragment extends Fragment {
@@ -47,5 +52,29 @@ public class Tab1Fragment extends Fragment {
         // Thiết lập Adapter cho GridView
         adapter = new MyArrayAdapter((Activity) requireContext(), R.layout.layout_service, serviceList);
         gridView.setAdapter(adapter);
+
+
+        // Hiển thị ngày hiện tại trên EditText
+        EditText edtDateNgay = view.findViewById(R.id.edtDate_ngay);
+
+        // Định dạng ngày
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = dateFormat.format(Calendar.getInstance().getTime());
+
+        // Gán ngày hiện tại vào EditText
+        edtDateNgay.setText(currentDate);
+
+
+        // Mở DatePickerDialog khi nhấn vào EditText
+        edtDateNgay.setOnClickListener(v -> {
+            new DatePickerDialog(requireContext(), (datePicker, year, month, dayOfMonth) -> {
+                calendar.set(year, month, dayOfMonth);
+                edtDateNgay.setText(dateFormat.format(calendar.getTime()));
+            },
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)).show();
+        });
     }
 }

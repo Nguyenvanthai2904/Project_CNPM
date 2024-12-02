@@ -79,6 +79,8 @@ public class LoginActivity extends AppCompatActivity {
             // Đặt con trỏ tại cuối văn bản
             edt_password.setSelection(edt_password.getText().length());
         });
+        // Ẩn mật khẩu mặc định khi bắt đầu
+        edt_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
     }
 
     private void loginUser() {

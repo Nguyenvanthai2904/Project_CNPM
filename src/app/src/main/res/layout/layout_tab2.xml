@@ -13,9 +13,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- Row for Date -->
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp">
 
                 <TextView
@@ -36,12 +37,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="date" />
+                    android:inputType="none" /> <!-- Disabled manual input for date -->
             </TableRow>
 
+            <!-- Row for Note -->
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp">
 
                 <TextView
@@ -63,12 +65,12 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="text" />
-
             </TableRow>
 
+            <!-- Row for Money -->
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp">
 
                 <TextView
@@ -77,22 +79,22 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:fontFamily="sans-serif"
-                    android:text="Tiền chi"
+                    android:text="Tiền thu"
                     android:textAlignment="center"
                     android:textColor="#061A85"
                     android:textSize="24sp"
                     android:textStyle="normal" />
 
                 <EditText
-                    android:id="@+id/edtNb_tienchi"
+                    android:id="@+id/edtNb_tienthu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="number" />
-
             </TableRow>
 
+            <!-- Category Text -->
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
@@ -102,17 +104,19 @@
                 android:paddingLeft="32dp"
                 android:text="Danh mục"
                 android:textColor="#061A85"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textStyle="normal" />
 
+            <!-- GridView for Categories -->
             <GridView
                 android:id="@+id/gv_tab2"
                 android:layout_width="match_parent"
                 android:layout_height="370dp"
                 android:layout_marginTop="20dp"
                 android:numColumns="3"
-                android:visibility="visible" />
+                android:verticalSpacing="16dp" />
 
+            <!-- Submit Button -->
             <Button
                 android:id="@+id/btn_tienthu"
                 android:layout_width="250dp"
@@ -122,8 +126,7 @@
                 android:text="Nhập khoản tiền thu"
                 android:textAllCaps="true"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
 
         </LinearLayout>
     </ScrollView>

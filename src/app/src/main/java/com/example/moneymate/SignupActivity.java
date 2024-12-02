@@ -1,8 +1,11 @@
 package com.example.moneymate;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +22,7 @@ import java.util.Map;
 public class SignupActivity extends AppCompatActivity {
 
     private EditText edt_name, edt_email2, edt_password2;
+    private TextView textViewHaveAccount;
     private Button btn_signup;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
@@ -37,7 +41,7 @@ public class SignupActivity extends AppCompatActivity {
         edt_email2 = findViewById(R.id.edt_email2);
         edt_password2 = findViewById(R.id.edt_password2);
         btn_signup = findViewById(R.id.btn_signup);
-
+        textViewHaveAccount = findViewById(R.id.textViewHaveAccount);
         // Apply window insets for edge-to-edge design
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -47,7 +51,15 @@ public class SignupActivity extends AppCompatActivity {
 
         // Set button click listener for signup
         btn_signup.setOnClickListener(v -> createUser());
+        textViewHaveAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent_haveAccount = new Intent(SignupActivity.this, LoginActivity.class);
+                startActivity(intent_haveAccount);
+            }
+        });
     }
+
 
     private void createUser() {
         String name = edt_name.getText().toString().trim();
@@ -55,7 +67,7 @@ public class SignupActivity extends AppCompatActivity {
         String password = edt_password2.getText().toString().trim();
 
         if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             return;
         }
 

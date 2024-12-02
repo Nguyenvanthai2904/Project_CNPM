@@ -88,7 +88,7 @@ public class Tab1Fragment extends Fragment {
 
         gridView.setOnItemClickListener((parent, v, position, id) -> {
             // Get the selected service name
-             selectedService = name[position];
+            selectedService = name[position];
             // Store it globally or use it when saving data
             // You can use this to show a Toast or save the selected service
             Toast.makeText(requireContext(), "Dịch vụ đã chọn: " + selectedService, Toast.LENGTH_SHORT).show();

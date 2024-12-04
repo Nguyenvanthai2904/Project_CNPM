@@ -43,58 +43,70 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Tiền thu" />
+                android:inputType="number"
+                android:text="Tiền thu"
+                android:textColor="#083785"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Tiền chi" />
+                android:inputType="number"
+                android:text="Tiền chi"
+                android:textColor="#093987"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Tổng" />
+                android:inputType="number"
+                android:text="Tổng"
+                android:textColor="#093276"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="50dp"
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextNumber"
+                android:id="@+id/editText_Tthu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textColor="#800808" />
 
             <EditText
-                android:id="@+id/editTextNumber2"
+                android:id="@+id/editText_Tchi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textColor="#8C0909" />
 
             <EditText
-                android:id="@+id/editTextNumber3"
+                android:id="@+id/editText_Tong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textColor="#900E0E" />
         </LinearLayout>
 
         <ListView
             android:id="@+id/eventListView"
             android:layout_width="match_parent"
-            android:layout_height="420dp"
-            android:background="@android:color/white"
+            android:layout_height="1000dp"
+            android:background="@drawable/hinhnenthongke"
             android:divider="@android:color/darker_gray"
             android:dividerHeight="1dp"
             android:padding="8dp" />

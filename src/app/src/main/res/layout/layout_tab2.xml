@@ -7,6 +7,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:paddingBottom="100dp">
 
         <LinearLayout
@@ -109,6 +110,8 @@
                 android:textStyle="normal" />
 
             <!-- GridView for Categories -->
+
+            <!-- Submit Button -->
             <GridView
                 android:id="@+id/gv_tab2"
                 android:layout_width="match_parent"
@@ -117,7 +120,6 @@
                 android:numColumns="3"
                 android:verticalSpacing="16dp" />
 
-            <!-- Submit Button -->
             <Button
                 android:id="@+id/btn_tienthu"
                 android:layout_width="250dp"

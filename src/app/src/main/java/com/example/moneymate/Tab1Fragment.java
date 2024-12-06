@@ -153,13 +153,14 @@ public class Tab1Fragment extends Fragment {
                         Toast.makeText(requireContext(), "Chi tiêu thêm thành công!", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e ->
                         Toast.makeText(requireContext(), "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+            //Xoá thông tin khi đã lưu
+            edtDate.setText("");
+            edtGhiChu.setText("");
+            edtTienChi.setText("");
+            selectedService = null;  // Clear the selected service
+
     }
-    private void resetFields() {
-        edtDate.setText("");
-        edtGhiChu.setText("");
-        edtTienChi.setText("");
-        selectedService = null;  // Clear the selected service
-    }
+
 
 }
 

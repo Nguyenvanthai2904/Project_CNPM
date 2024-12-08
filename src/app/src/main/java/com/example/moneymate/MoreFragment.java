@@ -67,13 +67,13 @@ public class MoreFragment extends Fragment {
 
                 switch (selectedItem) {
                     case "Cài đặt":
-                        myIntent = new Intent(getActivity(), LoginActivity.class);
+                        myIntent = new Intent(getActivity(), Setting.class);
                         break;
                     case "Quỹ chung":
                         myIntent = new Intent(getActivity(), group.class);
                         break;
                     case "Báo cáo":
-                        myIntent = new Intent(getActivity(), LoginActivity.class);
+                        myIntent = new Intent(getActivity(), Report.class);
                         break;
                     case "Đăng xuất":
                         // Thực hiện đăng xuất

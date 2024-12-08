@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F4F4"
+    android:orientation="vertical"
+    tools:context=".Setting" >
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="247dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/nen" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="32dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="#061A85"
+        android:drawableStart="@drawable/ngonngu"
+        android:text="Ngôn ngữ" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="32dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        android:textColor="#061A85"
+        android:drawableStart="@drawable/xoadulieu"
+        android:text="Xóa dữ liệu" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="366dp"
+            android:layout_height="296dp"
+            android:layout_marginStart="84dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.686"
+            app:srcCompat="@drawable/end2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

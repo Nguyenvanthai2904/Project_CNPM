@@ -136,7 +136,6 @@ public class Tab1Fragment extends Fragment {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
-
         // Prepare data to save
         Map<String, Object> data = new HashMap<>();
         data.put("date", date);

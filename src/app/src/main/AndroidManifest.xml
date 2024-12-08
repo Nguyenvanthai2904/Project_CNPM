@@ -13,9 +13,11 @@
         android:theme="@style/Theme.MoneyMate"
         tools:targetApi="31">
         <activity
-            android:name=".group"
+            android:name=".GroupDetailActivity"
             android:exported="false" />
-        <!-- Đặt SplashActivity làm màn hình khởi động -->
+        <activity
+            android:name=".group"
+            android:exported="false" /> <!-- Đặt SplashActivity làm màn hình khởi động -->
         <activity
             android:name=".SplashActivity"
             android:exported="true">

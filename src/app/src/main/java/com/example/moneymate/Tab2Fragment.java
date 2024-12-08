@@ -141,16 +141,17 @@ public class Tab2Fragment extends Fragment {
         db.collection("users").document(userId)
                 .collection("incomes")
                 .add(incomeData)
-                .addOnSuccessListener(documentReference ->
-                        Toast.makeText(requireContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show())
+                .addOnSuccessListener(documentReference -> {
+                    Toast.makeText(requireContext(), "Chi tiêu thêm thành công!", Toast.LENGTH_SHORT).show();
+
+                    edtDate.setText("");
+                    edtGhiChu.setText("");
+                    edtTienThu.setText("");
+                    selectedService = null;
+                })
                 .addOnFailureListener(e ->
                         Toast.makeText(requireContext(), "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-        //Xoá thông tin khi đã lưu
-        edtDate.setText("");
-        edtGhiChu.setText("");
-        edtTienThu.setText("");
-        selectedService = null;  // Clear the selected service
-
     }
+
 
 }

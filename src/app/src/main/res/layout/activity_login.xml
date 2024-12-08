@@ -79,13 +79,13 @@
             <CheckBox
                 android:id="@+id/cbshowpassword"
                 android:layout_width="wrap_content"
-                android:layout_height="15dp"
+                android:layout_height="18dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif"
                 android:text="Hiển thị Password"
-                android:textSize="10sp"
-                android:textColor="#3D88A0" />
+                android:textColor="#3D88A0"
+                android:textSize="12sp" />
 
             <Button
                 android:id="@+id/btn_login"

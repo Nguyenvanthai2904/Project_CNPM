@@ -69,7 +69,7 @@
                 android:drawablePadding="16dp"
                 android:ems="10"
                 android:fontFamily="sans-serif"
-                android:hint="Password"
+                android:hint="Mật khẩu"
                 android:inputType="textPersonName"
                 android:padding="8dp"
                 android:textColor="#22C3E6"
@@ -112,9 +112,9 @@
                 android:layout_marginTop="12dp"
                 android:background="@drawable/btn_login"
                 android:fontFamily="sans-serif"
-                android:text="Login"
+                android:text="Đăng nhập"
                 android:textAllCaps="true"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:backgroundTint="@null" />
 
@@ -128,7 +128,7 @@
                 android:textAlignment="center"
                 android:textColor="#3D88A0"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                 />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -140,7 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:layout_marginStart="32dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
                     android:background="@drawable/btn_background"
@@ -157,7 +157,7 @@
                     android:id="@+id/btn_google"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="32dp"
                     android:layout_weight="1"
                     android:background="@drawable/btn_background"
@@ -178,11 +178,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif"
-                android:text="Are you new user? Register"
+                android:text="Bạn là người dùng mới? Đăng kí"
                 android:textAlignment="center"
                 android:textColor="#3D88A0"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="18sp"
+                 />
 
 
         </LinearLayout>

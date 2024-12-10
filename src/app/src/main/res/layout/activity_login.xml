@@ -76,28 +76,45 @@
                 android:textColorHint="#22C3E6"
                 android:textSize="21sp" />
 
-            <CheckBox
-                android:id="@+id/cbshowpassword"
-                android:layout_width="wrap_content"
-                android:layout_height="18dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="sans-serif"
-                android:text="Hiển thị Password"
-                android:textColor="#3D88A0"
-                android:textSize="12sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/cbshowpassword"
+                    android:layout_width="205dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:buttonTint="#3D88A0"
+                    android:fontFamily="sans-serif"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:text="Hiển thị Password"
+                    android:textColor="#3D88A0"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_qmk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quên mật khẩu"
+                    android:textSize="13sp"
+                    android:layout_marginLeft="48dp"
+                    android:textColor="#3D88A0" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btn_login"
                 android:layout_width="200dp"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="12dp"
                 android:background="@drawable/btn_login"
                 android:fontFamily="sans-serif"
                 android:text="Login"
                 android:textAllCaps="true"
-                android:textSize="24sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 app:backgroundTint="@null" />
 

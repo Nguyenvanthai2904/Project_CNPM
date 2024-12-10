@@ -87,10 +87,7 @@ public class Tab1Fragment extends Fragment {
 
 
         gridView.setOnItemClickListener((parent, v, position, id) -> {
-            // Get the selected service name
             selectedService = name[position];
-            // Store it globally or use it when saving data
-            // You can use this to show a Toast or save the selected service
             Toast.makeText(requireContext(), "Dịch vụ đã chọn: " + selectedService, Toast.LENGTH_SHORT).show();
         });
     }
@@ -126,22 +123,22 @@ public class Tab1Fragment extends Fragment {
         String money = edtTienChi.getText().toString().trim();
 
 
-        // Validate inputs
+
         if (TextUtils.isEmpty(date) || TextUtils.isEmpty(note) || TextUtils.isEmpty(money)) {
             Toast.makeText(requireContext(), "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Get current user ID
+
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
-        // Prepare data to save
+
         Map<String, Object> data = new HashMap<>();
         data.put("date", date);
         data.put("note", note);
         data.put("money", money);
-        data.put("service", selectedService);  // Add the selected service
+        data.put("service", selectedService);
 
         // Save to Firestore
 
@@ -156,7 +153,7 @@ public class Tab1Fragment extends Fragment {
             edtDate.setText("");
             edtGhiChu.setText("");
             edtTienChi.setText("");
-            selectedService = null;  // Clear the selected service
+            selectedService = null;  
 
     }
 

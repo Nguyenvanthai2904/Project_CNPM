@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -204,5 +205,18 @@ public class ChartFragment extends Fragment {
         // Set data to the chart and refresh it
         barChart.setData(data);
         barChart.invalidate(); // Refresh the chart view
+
+        TextView emotionIcon = getView().findViewById(R.id.emotionIcon);
+        TextView emotionMessage = getView().findViewById(R.id.emotionMessage);
+        if (totalIncomes > totalExpenses) {
+            emotionIcon.setText("😃 😃 😃");
+            emotionMessage.setText("Tháng này thật tuyệt vời! Bạn đã tiết kiệm được một khoản đáng kể.");
+        } else if (totalIncomes < totalExpenses) {
+            emotionIcon.setText("😢 😢 😢");
+            emotionMessage.setText("Cẩn thận hơn trong chi tiêu nhé! Tháng này bạn đã tiêu nhiều hơn thu.");
+        } else {
+            emotionIcon.setText("😐 😐 😐");
+            emotionMessage.setText("Tài chính tháng này cân bằng. Hãy thử tiết kiệm nhiều hơn trong tháng sau!");
+        }
     }
 }

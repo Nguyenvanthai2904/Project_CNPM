@@ -1,5 +1,6 @@
 package com.example.moneymate;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,11 +25,12 @@ import android.text.InputType;
 public class LoginActivity extends AppCompatActivity {
     private EditText edt_email, edt_password;
     private Button btn_login, btn_facebook, btn_google;
-    private TextView tv_register;
+    private TextView tv_register, tv_qmk;
 
     private FirebaseAuth auth;
     private FirebaseFirestore db;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = findViewById(R.id.btn_login);
         btn_google = findViewById(R.id.btn_google);
         tv_register = findViewById(R.id.tv_register);
+        tv_qmk= findViewById(R.id.tv_qmk);
 
         // OnClickListener cho TextView đăng ký
         tv_register.setOnClickListener(view -> {
@@ -58,12 +61,18 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent_signup);
         });
 
-        // OnClickListener cho nút đăng nhập
+        tv_qmk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent qmk_intent = new Intent(LoginActivity.this, ForgotPassword.class);
+                startActivity(qmk_intent);
+            }
+        });
+
+
         btn_login.setOnClickListener(view -> loginUser());
 
-        // thêm OnClickListener cho các nút Facebook và Google nếu đã tích hợp
-        // btn_facebook.setOnClickListener(...);
-        // btn_google.setOnClickListener(...);
+
 
         CheckBox cbShowpassword = findViewById(R.id.cbshowpassword);
 

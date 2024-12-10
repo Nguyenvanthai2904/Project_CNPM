@@ -10,18 +10,20 @@
         android:id="@+id/textView19"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Tháng"
         android:textColor="#061A85"
-        android:textSize="16sp" />
+        android:textSize="24sp" />
 
     <Spinner
         android:id="@+id/monthSpinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        android:spinnerMode="dropdown"
         android:background="@drawable/spinner"
-        android:prompt="@string/prompt_select_month" />
+        android:prompt="@string/prompt_select_month"
+        android:spinnerMode="dropdown" />
 
     <!-- Spinner for selecting year -->
     <TextView
@@ -30,22 +32,45 @@
         android:layout_height="wrap_content"
         android:text="Năm"
         android:textColor="#061A85"
-        android:textSize="16sp" />
+        android:textSize="24sp" />
 
     <Spinner
         android:id="@+id/yearSpinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        android:spinnerMode="dropdown"
         android:background="@drawable/spinner"
-        android:prompt="@string/prompt_select_year" />
+        android:prompt="@string/prompt_select_year"
+        android:spinnerMode="dropdown" />
 
     <!-- Bar chart to display income and expense data -->
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barChart"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/emotionIcon"
+        android:layout_marginTop="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="😐 😐 😐"
+        android:textSize="36sp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/emotionMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Tài chính tháng này cân bằng. Hãy thử tiết kiệm nhiều hơn trong tháng sau!"
+        android:textAlignment="center"
+        android:textColor="#061A85"
+        android:textSize="16sp" />
+
+
 
 </LinearLayout>

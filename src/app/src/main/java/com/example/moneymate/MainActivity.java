@@ -22,11 +22,8 @@ import com.example.moneymate.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    // truy cập các View trong layout XML của mình mà không cần phải sử dụng findViewById()
-    //bật viewBinding trong gradle module
+
     ActivityMainBinding binding;
-//    private BottomNavigationView bottomNavigationView;
-//    private FrameLayout frame_layout;
 
 
     @SuppressLint({"MissingInflatedId", "NonConstantResourceId"})
@@ -35,11 +32,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

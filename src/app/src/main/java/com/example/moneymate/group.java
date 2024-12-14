@@ -3,18 +3,25 @@ package com.example.moneymate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FieldValue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,151 +30,218 @@ import java.util.Map;
 
 public class group extends AppCompatActivity {
 
-    private EditText edtName, edtID, edtAmount, edtDeadline;
-    private Button btnCreateGroup;
-    private ListView listViewGroups;
+    private EditText groupNameEditText, groupIdEditText, monthlyAmountEditText;
+    private Button createGroupButton;
+    private ListView groupListView;
+    private ProgressBar loadingProgressBar;
+    private LinearLayout inputLayout;
 
-    private FirebaseFirestore db; // Firestore instance
-    private FirebaseAuth auth; // Firebase Auth instance
-    private List<String> groupList; // Danh sách nhóm
-    private ArrayAdapter<String> adapter; // Adapter cho ListView
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+
+    private List<String> groupNameList;
+    private List<String> groupIDList;
+    private List<Double> monthlyAmount; // Consider using Long for currency
+    private ArrayAdapter<String> groupAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
 
-        // Liên kết các thành phần giao diện
-        edtName = findViewById(R.id.edt_Name);
-        edtID = findViewById(R.id.edt_IDtao);
-        edtAmount = findViewById(R.id.edt_Tienhangthang);
-        edtDeadline = findViewById(R.id.edt_Han);
-        btnCreateGroup = findViewById(R.id.btn_Taonhom); // Nút "Tạo nhóm"
-        listViewGroups = findViewById(R.id.lv_Danhsachnhom);
+        groupNameEditText = findViewById(R.id.edt_Name);
+        groupIdEditText = findViewById(R.id.edt_IDtao);
+        monthlyAmountEditText = findViewById(R.id.edt_Tienhangthang);
+        createGroupButton = findViewById(R.id.btn_Taonhom);
+        groupListView = findViewById(R.id.lv_Danhsachnhom);
+        loadingProgressBar = findViewById(R.id.loadingProgressBar);
+        inputLayout = findViewById(R.id.inputLayout);
 
-        // Khởi tạo Firebase Firestore và Auth
+        mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        auth = FirebaseAuth.getInstance();
-        groupList = new ArrayList<>();
 
-        // Cài đặt adapter cho ListView
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, groupList);
-        listViewGroups.setAdapter(adapter);
+        groupNameList = new ArrayList<>();
+        groupIDList = new ArrayList<>();
+        monthlyAmount = new ArrayList<>(); // Initialize the list
 
-        // Xử lý sự kiện nút "Tạo nhóm"
-        btnCreateGroup.setOnClickListener(v -> createGroup());
+        groupAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, groupNameList);
+        groupListView.setAdapter(groupAdapter);
 
-        // Tải danh sách nhóm
+        createGroupButton.setOnClickListener(v -> createGroup());
+
+        groupListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Get the selected group ID
+                String selectedGroupID = groupIDList.get(position);
+                String selectedGroupName = groupNameList.get(position);
+
+                // Start GroupDetailsActivity and pass the group ID
+                Intent intent = new Intent(group.this, GroupDetailActivity.class);
+                intent.putExtra("groupID", selectedGroupID);
+                intent.putExtra("groupName", selectedGroupName);
+
+                startActivity(intent);
+            }
+        });
+
         loadGroups();
+    }
 
-        listViewGroups.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedGroup = groupList.get(position); // Lấy tên nhóm được chọn
+    private void showLoadingIndicator() {
+        loadingProgressBar.setVisibility(View.VISIBLE);
+        inputLayout.setVisibility(View.GONE);
+        groupListView.setVisibility(View.GONE);
+    }
 
-            // Lấy ID người dùng đã đăng nhập
-            String userId = auth.getCurrentUser().getUid(); // ID người dùng hiện tại
+    private void hideLoadingIndicator() {
+        loadingProgressBar.setVisibility(View.GONE);
+        inputLayout.setVisibility(View.VISIBLE);
+        groupListView.setVisibility(View.VISIBLE);
+    }
 
-            // Truy vấn Firestore để lấy thông tin chi tiết của nhóm
-            db.collection("users")
-                    .document(userId) // Lấy dữ liệu từ người dùng hiện tại
-                    .collection("groups")
-                    .whereEqualTo("name", selectedGroup) // Lọc nhóm theo tên
-                    .get()
-                    .addOnSuccessListener(DocumentSnapshots -> {
-                        if (!DocumentSnapshots.isEmpty()) {
-                            // Lấy thông tin chi tiết nhóm
-                            DocumentSnapshot document = DocumentSnapshots.getDocuments().get(0);
-                            String groupName = document.getString("name");
-                            String groupID = document.getString("id");
-                            double monthlyAmount = document.getDouble("monthlyAmount");
-                            String deadline = document.getString("deadline");
+    private void loadGroups() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            hideLoadingIndicator();
+            showToast("You are not logged in.");
+            return;
+        }
 
-                            // Chuyển sang Activity mới và truyền dữ liệu
-                            Intent intent = new Intent(group.this, GroupDetailActivity.class);
-                            intent.putExtra("groupName", groupName);
-                            intent.putExtra("groupID", groupID);
-                            intent.putExtra("monthlyAmount", monthlyAmount);
-                            intent.putExtra("deadline", deadline);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(group.this, "Không tìm thấy thông tin nhóm!", Toast.LENGTH_SHORT).show();
+        String uid = currentUser.getUid();
+        db.collection("users").document(uid).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists() && document.contains("groups")) {
+                    List<String> groupIds = (List<String>) document.get("groups");
+                    if (groupIds != null && !groupIds.isEmpty()) {
+                        groupNameList.clear();
+                        groupIDList.clear();
+                        AtomicInteger groupCount = new AtomicInteger(groupIds.size());
+                        for (String groupId : groupIds) {
+                            loadGroupName(groupId, groupCount);
                         }
-                    })
-                    .addOnFailureListener(e -> Toast.makeText(group.this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                    } else {
+                        showToast("User has no groups yet.");
+                        hideLoadingIndicator();
+                    }
+                } else {
+                    showToast("User data not found or no groups exist.");
+                    hideLoadingIndicator();
+                }
+            } else {
+                showToast("Failed to load groups: " + task.getException().getMessage());
+                hideLoadingIndicator();
+            }
+        });
+    }
+
+    private void loadGroupName(String groupId, AtomicInteger groupCount) {
+        db.collection("groups").document(groupId).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists() && document.contains("name")) {
+                    String groupName = document.getString("name");
+                    groupNameList.add(groupName);
+                    groupIDList.add(groupId);
+
+                    if (groupCount.decrementAndGet() == 0) {
+                        runOnUiThread(() -> groupAdapter.notifyDataSetChanged());
+                    }
+                } else {
+                    showToast("Group name not found for group ID: " + groupId);
+                }
+            } else {
+                showToast("Failed to load group name: " + task.getException().getMessage());
+            }
+            hideLoadingIndicator();
         });
     }
 
     private void createGroup() {
-        // Lấy dữ liệu từ các EditText
-        String name = edtName.getText().toString().trim();
-        String id = edtID.getText().toString().trim();
-        String amount = edtAmount.getText().toString().trim();
-        String deadline = edtDeadline.getText().toString().trim();
+        String groupName = groupNameEditText.getText().toString().trim();
+        String groupId = groupIdEditText.getText().toString().trim();
+        String monthlyAmountString = monthlyAmountEditText.getText().toString().trim();
 
-        // Kiểm tra nếu có trường nào bỏ trống
-        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(id) || TextUtils.isEmpty(amount) || TextUtils.isEmpty(deadline)) {
-            Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(groupName) || TextUtils.isEmpty(groupId) || TextUtils.isEmpty(monthlyAmountString)) {
+            showToast("Please fill in all the fields.");
             return;
         }
 
+        long monthlyAmountLong;
         try {
-            // Chuyển đổi số tiền thành Double
-            double monthlyAmount = Double.parseDouble(amount);
-
-            // Lấy ID người dùng đã đăng nhập
-            String userId = auth.getCurrentUser().getUid(); // ID người dùng hiện tại
-
-            // Chuẩn bị dữ liệu để lưu
-            Map<String, Object> groupData = new HashMap<>();
-            groupData.put("name", name);
-            groupData.put("id", id);
-            groupData.put("monthlyAmount", monthlyAmount);
-            groupData.put("deadline", deadline);
-
-            // Lưu dữ liệu vào Firestore
-            db.collection("users") // Thay đổi nếu cần
-                    .document(userId) // Lưu vào ID người dùng hiện tại
-                    .collection("groups")
-                    .add(groupData)
-                    .addOnSuccessListener(documentReference -> {
-                        Toast.makeText(this, "Nhóm đã được tạo thành công!", Toast.LENGTH_SHORT).show();
-                        groupList.add(name); // Thêm nhóm vào danh sách
-                        adapter.notifyDataSetChanged(); // Cập nhật danh sách hiển thị
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
-
+            monthlyAmountLong = Long.parseLong(monthlyAmountString);
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Số tiền phải là số hợp lệ!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void loadGroups() {
-        // Kiểm tra xem người dùng đã đăng nhập chưa
-        if (auth.getCurrentUser() == null) {
-            Toast.makeText(this, "Vui lòng đăng nhập!", Toast.LENGTH_SHORT).show();
+            showToast("Monthly amount must be a number.");
             return;
         }
 
-        String userId = auth.getCurrentUser().getUid(); // Lấy ID người dùng hiện tại
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            showToast("You are not logged in.");
+            return;
+        }
+        String uid = currentUser.getUid();
 
-        db.collection("users")
-                .document(userId) // Thay USER_ID bằng ID người dùng hiện tại
-                .collection("groups")
+        Map<String, Object> groupData = new HashMap<>();
+        groupData.put("name", groupName);
+        groupData.put("totalAmount", monthlyAmountLong); // Store as Long
+        List<String> members = new ArrayList<>();
+        members.add(uid);
+        groupData.put("members", members);
+
+        showLoadingIndicator();
+        db.collection("groups").document(groupId)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        groupList.clear();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            String groupName = document.getString("name");
-                            if (groupName != null) {
-                                groupList.add(groupName); // Thêm tên nhóm
-                            }
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            hideLoadingIndicator();
+                            showToast("Group ID already exists.");
+                        } else {
+                            db.collection("groups").document(groupId)
+                                    .set(groupData)
+                                    .addOnSuccessListener(aVoid -> {
+                                        showToast("Group created successfully.");
+                                        // Use FieldValue.arrayUnion() for adding to an array
+                                        addGroupToUser(groupId, uid);
+                                        clearInputFields();
+                                        loadGroups();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        hideLoadingIndicator();
+                                        showToast("Failed to create group: " + e.getMessage());
+                                    });
                         }
-                        adapter.notifyDataSetChanged(); // Cập nhật danh sách hiển thị
                     } else {
-                        Toast.makeText(this, "Không thể tải danh sách nhóm.", Toast.LENGTH_SHORT).show();
+                        hideLoadingIndicator();
+                        showToast("Failed to check group ID: " + task.getException().getMessage());
                     }
                 });
+    }
+
+    private void addGroupToUser(String groupId, String userId) {
+        // Use FieldValue.arrayUnion to add the group ID to the user's groups array
+        db.collection("users").document(userId)
+                .update("groups", FieldValue.arrayUnion(groupId))
+                .addOnSuccessListener(aVoid -> {
+                    Log.d("group", "Group added to user successfully");
+                    hideLoadingIndicator();
+                })
+                .addOnFailureListener(e -> {
+                    showToast("Failed to add group to user: " + e.getMessage());
+                    hideLoadingIndicator();
+                });
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void clearInputFields() {
+        groupNameEditText.setText("");
+        groupIdEditText.setText("");
+        monthlyAmountEditText.setText("");
     }
 }

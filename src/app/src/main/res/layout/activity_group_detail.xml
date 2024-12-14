@@ -1,72 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/edt_MonthlyAmount"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp" >
+    android:padding="16dp">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvGroupName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tên nhóm"
-            android:textColor="#045275"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/tvGroupID"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="TextView"
-            android:textColor="#1A9FD9"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView22"
-                android:layout_width="220dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:text="Tiền đóng quỹ tháng:"
-                android:textColor="#18A1DE"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/edit_monthlyAmount"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvGroupName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="number"
-                android:textColor="@color/black" />
+                android:gravity="center"
+                android:text="Tên nhóm"
+                android:textColor="#045275"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvt_Tentruongnhom"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="TextView"
+                android:textColor="#0A99D9"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvGroupID"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="TextView"
+                android:textColor="#1A9FD9"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="270dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="Tổng tiền của nhóm :"
+                    android:textColor="#18A1DE"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edit_monthlyAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="ID thành viên :"
+                    android:textColor="#139AD5"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edt_IDthhanhvien"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="text" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="140dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/btn_login"
+                android:backgroundTint="@null"
+                android:text="Thêm"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="Danh sách thành viên:"
+                android:textColor="#096E9B"
+                android:textSize="25sp"
+                android:textStyle="bold" />
         </LinearLayout>
+    </ScrollView>
 
-        <TextView
-            android:id="@+id/tvDeadline"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="TextView"
-            android:textColor="#1BA1DC"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+    <ListView
+        android:id="@+id/listViewMembers"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp" />
 
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="match_parent"
-            android:layout_height="40dp" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_viecchinhom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="Thông tin chi tiêu của nhóm"
+        android:textColor="#169EDC"
+        android:textColorHighlight="#0C91CC"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 </LinearLayout>

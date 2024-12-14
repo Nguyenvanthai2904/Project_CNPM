@@ -10,6 +10,7 @@
     tools:context=".group">
 
     <LinearLayout
+        android:id="@+id/inputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -81,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="Số tiền đóng quỹ hàng tháng :"
+            android:text="Tổng tiền của nhóm :"
             android:textColor="#FD0F6D92"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -94,32 +95,6 @@
             android:inputType="number"
             android:textSize="20sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Hạn đóng quỹ :"
-                android:textColor="#136285"
-                android:textSize="25dp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/edt_Han"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="number"
-                android:textSize="20sp" />
-        </LinearLayout>
-
         <Button
             android:id="@+id/btn_Taonhom"
             android:layout_width="200dp"
@@ -130,40 +105,6 @@
             android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ID vào nhóm :"
-                android:textColor="#096C97"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/edt_IDvao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="number"
-                android:textSize="20sp" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_Thamgia"
-            android:layout_width="200dp"
-            android:layout_height="60dp"
-            android:text="Tham gia"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/textView15"
@@ -178,6 +119,14 @@
             android:id="@+id/lv_Danhsachnhom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <ProgressBar
+        android:id="@+id/loadingProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
 
     </LinearLayout>
 </ScrollView>

@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MoneyMate"
         tools:targetApi="31">
         <activity
+            android:name=".GroupExpensesActivity"
+            android:exported="false" />
+        <activity
             android:name=".ForgotPassword"
             android:exported="false" />
         <activity

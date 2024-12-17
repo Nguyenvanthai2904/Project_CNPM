@@ -30,8 +30,8 @@ import java.util.Map;
 
 public class group extends AppCompatActivity {
 
-    private EditText groupNameEditText, groupIdEditText, monthlyAmountEditText;
-    private Button createGroupButton;
+    private EditText groupNameEditText, groupIdEditText, monthlyAmountEditText, joinGroupIdEditText;
+    private Button createGroupButton, joinGroupButton;
     private ListView groupListView;
     private ProgressBar loadingProgressBar;
     private LinearLayout inputLayout;
@@ -41,7 +41,7 @@ public class group extends AppCompatActivity {
 
     private List<String> groupNameList;
     private List<String> groupIDList;
-    private List<Double> monthlyAmount; // Consider using Long for currency
+    private List<Double> monthlyAmount;
     private ArrayAdapter<String> groupAdapter;
 
     @Override
@@ -53,6 +53,8 @@ public class group extends AppCompatActivity {
         groupIdEditText = findViewById(R.id.edt_IDtao);
         monthlyAmountEditText = findViewById(R.id.edt_Tienhangthang);
         createGroupButton = findViewById(R.id.btn_Taonhom);
+        joinGroupIdEditText = findViewById(R.id.edt_IDthamgia);
+        joinGroupButton = findViewById(R.id.btn_Thamgia);
         groupListView = findViewById(R.id.lv_Danhsachnhom);
         loadingProgressBar = findViewById(R.id.loadingProgressBar);
         inputLayout = findViewById(R.id.inputLayout);
@@ -62,21 +64,20 @@ public class group extends AppCompatActivity {
 
         groupNameList = new ArrayList<>();
         groupIDList = new ArrayList<>();
-        monthlyAmount = new ArrayList<>(); // Initialize the list
+        monthlyAmount = new ArrayList<>();
 
         groupAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, groupNameList);
         groupListView.setAdapter(groupAdapter);
 
         createGroupButton.setOnClickListener(v -> createGroup());
+        joinGroupButton.setOnClickListener(v -> joinGroup());
 
         groupListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Get the selected group ID
                 String selectedGroupID = groupIDList.get(position);
                 String selectedGroupName = groupNameList.get(position);
 
-                // Start GroupDetailsActivity and pass the group ID
                 Intent intent = new Intent(group.this, GroupDetailActivity.class);
                 intent.putExtra("groupID", selectedGroupID);
                 intent.putExtra("groupName", selectedGroupName);
@@ -101,6 +102,7 @@ public class group extends AppCompatActivity {
     }
 
     private void loadGroups() {
+        showLoadingIndicator();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
             hideLoadingIndicator();
@@ -185,7 +187,7 @@ public class group extends AppCompatActivity {
 
         Map<String, Object> groupData = new HashMap<>();
         groupData.put("name", groupName);
-        groupData.put("totalAmount", monthlyAmountLong); // Store as Long
+        groupData.put("totalAmount", monthlyAmountLong);
         List<String> members = new ArrayList<>();
         members.add(uid);
         groupData.put("members", members);
@@ -204,7 +206,6 @@ public class group extends AppCompatActivity {
                                     .set(groupData)
                                     .addOnSuccessListener(aVoid -> {
                                         showToast("Group created successfully.");
-                                        // Use FieldValue.arrayUnion() for adding to an array
                                         addGroupToUser(groupId, uid);
                                         clearInputFields();
                                         loadGroups();
@@ -221,8 +222,54 @@ public class group extends AppCompatActivity {
                 });
     }
 
+    private void joinGroup() {
+        String groupIdToJoin = joinGroupIdEditText.getText().toString().trim();
+
+        if (TextUtils.isEmpty(groupIdToJoin)) {
+            showToast("Please enter a group ID.");
+            return;
+        }
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            showToast("You are not logged in.");
+            return;
+        }
+        String uid = currentUser.getUid();
+
+        showLoadingIndicator();
+        db.collection("groups").document(groupIdToJoin)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            // Add user to group's members
+                            db.collection("groups").document(groupIdToJoin)
+                                    .update("members", FieldValue.arrayUnion(uid))
+                                    .addOnSuccessListener(aVoid -> {
+                                        // Add group to user's groups
+                                        addGroupToUser(groupIdToJoin, uid);
+                                        showToast("Successfully joined group.");
+                                        joinGroupIdEditText.setText("");
+                                        loadGroups();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        hideLoadingIndicator();
+                                        showToast("Failed to join group: " + e.getMessage());
+                                    });
+                        } else {
+                            hideLoadingIndicator();
+                            showToast("Group ID does not exist.");
+                        }
+                    } else {
+                        hideLoadingIndicator();
+                        showToast("Failed to check group ID: " + task.getException().getMessage());
+                    }
+                });
+    }
+
     private void addGroupToUser(String groupId, String userId) {
-        // Use FieldValue.arrayUnion to add the group ID to the user's groups array
         db.collection("users").document(userId)
                 .update("groups", FieldValue.arrayUnion(groupId))
                 .addOnSuccessListener(aVoid -> {

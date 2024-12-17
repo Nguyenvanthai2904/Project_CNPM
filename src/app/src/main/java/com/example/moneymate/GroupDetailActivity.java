@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -47,10 +49,11 @@ public class GroupDetailActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private String currentGroupID;
+    private String groupCreatorId; // Store the creator's ID
 
-    private static final String TAG = "GroupDetailActivity"; // For logging
+    private static final String TAG = "GroupDetailActivity";
 
-    private ListenerRegistration membersListener; // Listener for real-time updates
+    private ListenerRegistration membersListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,17 +83,12 @@ public class GroupDetailActivity extends AppCompatActivity {
         tvGroupID.setText("ID nhóm: " + groupID);
 
         loadGroupData(groupID);
-        loadGroupMembers(groupID); // This now sets up the listener
+        loadGroupMembers(groupID);
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String memberID = edt_IDthhanhvien.getText().toString().trim();
-                if (!memberID.isEmpty()) {
-                    addMemberToGroup(currentGroupID, memberID);
-                } else {
-                    Toast.makeText(GroupDetailActivity.this, "Please enter a User ID", Toast.LENGTH_SHORT).show();
-                }
+                checkIfUserIsCreatorAndAddMember();
             }
         });
         tvGroupExpensesInfo.setOnClickListener(new View.OnClickListener() {
@@ -116,9 +114,9 @@ public class GroupDetailActivity extends AppCompatActivity {
                             if (documentSnapshot.contains("members")) {
                                 List<String> members = (List<String>) documentSnapshot.get("members");
                                 if (members != null && !members.isEmpty()) {
-                                    String creatorId = members.get(0);
-                                    Log.d(TAG, "loadGroupData: Creator ID: " + creatorId);
-                                    fetchAndDisplayCreatorName(creatorId);
+                                    groupCreatorId = members.get(0); // Store the creator ID here
+                                    Log.d(TAG, "loadGroupData: Creator ID: " + groupCreatorId);
+                                    fetchAndDisplayCreatorName(groupCreatorId);
                                 } else {
                                     Log.d(TAG, "loadGroupData: Members list is empty or null");
                                 }
@@ -195,7 +193,6 @@ public class GroupDetailActivity extends AppCompatActivity {
     private void loadGroupMembers(String groupID) {
         Log.d(TAG, "loadGroupMembers called for groupID: " + groupID);
 
-        // Remove any existing listener before setting a new one
         if (membersListener != null) {
             membersListener.remove();
         }
@@ -267,10 +264,36 @@ public class GroupDetailActivity extends AppCompatActivity {
         });
     }
 
+    private void checkIfUserIsCreatorAndAddMember() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String currentUserId = currentUser.getUid();
+            Log.d(TAG, "checkIfUserIsCreatorAndAddMember: Current User ID: " + currentUserId);
+            Log.d(TAG, "checkIfUserIsCreatorAndAddMember: Group Creator ID: " + groupCreatorId);
+
+            if (currentUserId.equals(groupCreatorId)) {
+                // User is the creator, proceed to add member
+                String memberID = edt_IDthhanhvien.getText().toString().trim();
+                if (!memberID.isEmpty()) {
+                    addMemberToGroup(currentGroupID, memberID);
+                } else {
+                    Toast.makeText(GroupDetailActivity.this, "Please enter a User ID", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                // User is not the creator, show error message
+                Log.d(TAG, "checkIfUserIsCreatorAndAddMember: User is not the creator");
+                Toast.makeText(GroupDetailActivity.this, "Only the group creator can add members.", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            // No user is logged in
+            Log.d(TAG, "checkIfUserIsCreatorAndAddMember: No user logged in");
+            Toast.makeText(GroupDetailActivity.this, "You must be logged in to perform this action.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void addMemberToGroup(String groupID, String memberID) {
         Log.d(TAG, "addMemberToGroup called for groupID: " + groupID + ", memberID: " + memberID);
 
-        // Check if the user exists before adding
         db.collection("users").document(memberID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -279,7 +302,6 @@ public class GroupDetailActivity extends AppCompatActivity {
                     if (userDocument.exists()) {
                         Log.d(TAG, "addMemberToGroup: User exists: " + memberID);
 
-                        // Check if the user is already a member of the group
                         db.collection("groups").document(groupID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> groupTask) {
@@ -288,11 +310,9 @@ public class GroupDetailActivity extends AppCompatActivity {
                                     if (groupDocument.exists()) {
                                         List<String> members = (List<String>) groupDocument.get("members");
                                         if (members != null && members.contains(memberID)) {
-                                            // User is already a member
                                             Log.d(TAG, "addMemberToGroup: User is already a member of the group");
                                             Toast.makeText(GroupDetailActivity.this, "User is already a member of the group", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            // User is not a member, proceed with adding
                                             WriteBatch batch = db.batch();
 
                                             DocumentReference groupRef = db.collection("groups").document(groupID);
@@ -308,7 +328,6 @@ public class GroupDetailActivity extends AppCompatActivity {
                                                         Toast.makeText(GroupDetailActivity.this, "Member added successfully", Toast.LENGTH_SHORT).show();
                                                         Log.d(TAG, "addMemberToGroup: Member added successfully");
                                                         edt_IDthhanhvien.setText("");
-                                                        // loadGroupMembers(groupID); // No need to manually reload, listener will handle it
                                                     } else {
                                                         Toast.makeText(GroupDetailActivity.this, "Failed to add member", Toast.LENGTH_SHORT).show();
                                                         Log.e(TAG, "addMemberToGroup: Failed to add member", task.getException());
@@ -327,7 +346,6 @@ public class GroupDetailActivity extends AppCompatActivity {
                             }
                         });
                     } else {
-                        // User does not exist
                         Log.d(TAG, "addMemberToGroup: User does not exist: " + memberID);
                         Toast.makeText(GroupDetailActivity.this, "User does not exist", Toast.LENGTH_SHORT).show();
                     }
@@ -343,7 +361,7 @@ public class GroupDetailActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (membersListener != null) {
-            membersListener.remove(); // Important: Remove the listener to prevent memory leaks
+            membersListener.remove();
             Log.d(TAG, "onDestroy: membersListener removed");
         }
     }

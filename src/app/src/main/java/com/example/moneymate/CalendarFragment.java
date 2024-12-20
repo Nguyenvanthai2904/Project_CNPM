@@ -97,11 +97,11 @@ public class CalendarFragment extends Fragment {
                             totalIncome += amount;
 
                             // Add income event to the list
-                            eventList.add("Tiền thu: " + service + "- $" + amount + ": " + note);
+                            eventList.add("Tiền thu: " + service + "-" + amount +"VNĐ"+ " : " + note);
                         }
 
                         // Update income EditText
-                        incomeEditText.setText("$"+String.valueOf(totalIncome));
+                        incomeEditText.setText(String.valueOf(totalIncome)+"VNĐ");
 
                         // Fetch expenses after incomes
                         fetchExpensesForDate(date);
@@ -131,15 +131,15 @@ public class CalendarFragment extends Fragment {
                             totalExpenses += amount;
 
                             // Add expense event to the list
-                            eventList.add("Tiền chi: " + service + "- $" + amount + ": " + note);
+                            eventList.add("Tiền chi: " + service + "-" + amount +"VNĐ" + " : " + note);
                         }
 
                         // Update expense EditText
-                        expenseEditText.setText("$"+ String.valueOf(totalExpenses));
+                        expenseEditText.setText(String.valueOf(totalExpenses)+"VNĐ");
 
                         // Calculate and update total (income - expenses)
                         int total = totalIncome - totalExpenses;
-                        totalEditText.setText("$"+String.valueOf(total));
+                        totalEditText.setText(String.valueOf(total)+"VNĐ");
 
                         // Notify adapter to update ListView
                         adapter.notifyDataSetChanged();

@@ -129,7 +129,7 @@ public class GroupDetailActivity extends AppCompatActivity {
                                 Long monthlyAmount = documentSnapshot.getLong("totalAmount");
                                 Log.d(TAG, "loadGroupData: Monthly amount: " + monthlyAmount);
                                 if (monthlyAmount != null) {
-                                    edit_monthlyAmount.setText(String.valueOf(monthlyAmount));
+                                    edit_monthlyAmount.setText(String.valueOf(monthlyAmount)+"VNĐ");
                                 } else {
                                     edit_monthlyAmount.setText("0");
                                     Log.d(TAG, "loadGroupData: Monthly amount is null");

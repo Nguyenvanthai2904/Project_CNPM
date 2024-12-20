@@ -19,8 +19,8 @@ public class MoreFragment extends Fragment {
     // Khai báo FirebaseAuth
     private FirebaseAuth mAuth;
 
-    int image[] = {R.drawable.caidat, R.drawable.thaydoimau, R.drawable.baocao, R.drawable.dangxuat};
-    String name[] = {"Cài đặt", "Quỹ chung", "Báo cáo", "Đăng xuất"};
+    int image[] = {R.drawable.thongtincanhan, R.drawable.caidat, R.drawable.thaydoimau, R.drawable.baocao, R.drawable.dangxuat};
+    String name[] = {"Thông tin cá nhân", "Cài đặt", "Quỹ chung", "Báo cáo", "Đăng xuất"};
     ArrayList<item> mylist;
     MoreMyArrayAdapter moremyarrrayadapter;
     ListView lv;
@@ -66,6 +66,9 @@ public class MoreFragment extends Fragment {
                 Intent myIntent;
 
                 switch (selectedItem) {
+                    case"Thông tin cá nhân":
+                        myIntent = new Intent(getActivity(), personal.class);
+                        break;
                     case "Cài đặt":
                         myIntent = new Intent(getActivity(), Setting.class);
                         break;

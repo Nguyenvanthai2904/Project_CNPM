@@ -176,7 +176,7 @@ public class GroupExpensesActivity extends AppCompatActivity {
 
                         if (date != null && money != null && service != null) {
                             String formattedMoney = String.format("%.0f", money);
-                            String expense = "Date: " + date + ", Money: " + formattedMoney + ", Service: " + service;
+                            String expense = "Date: " + date + "- Money: " + formattedMoney+ "VNĐ" + "- Service: " + service;
                             newExpensesList.add(expense); // Add to the new list
                         } else {
                             Log.w("FirestoreError", "Missing data in document: " + document.getId());
@@ -213,7 +213,7 @@ public class GroupExpensesActivity extends AppCompatActivity {
                     if (documentSnapshot.exists()) {
                         Double totalAmount = documentSnapshot.getDouble("totalAmount");
                         if (totalAmount != null) {
-                            totalAmountTextView.setText(String.format("%.0f", totalAmount));
+                            totalAmountTextView.setText(String.format("%.0f", totalAmount)+"VNĐ");
                         } else {
                             totalAmountTextView.setText("0");
                         }
@@ -256,8 +256,8 @@ public class GroupExpensesActivity extends AppCompatActivity {
                                         double remainingAmount = values[0] - values[1];
 
                                         // Update UI
-                                        edtTongTienChiGroup.setText(String.format("%.0f", values[1]));
-                                        edtTienThuaGroup.setText(String.format("%.0f", remainingAmount));
+                                        edtTongTienChiGroup.setText(String.format("%.0f", values[1])+"VNĐ");
+                                        edtTienThuaGroup.setText(String.format("%.0f", remainingAmount)+"VNĐ");
                                     } else {
                                         edtTongTienChiGroup.setText("0");
                                         edtTienThuaGroup.setText("0");

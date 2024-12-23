@@ -90,7 +90,7 @@
                     android:fontFamily="sans-serif"
                     android:scaleX="0.8"
                     android:scaleY="0.8"
-                    android:text="Hiển thị Password"
+                    android:text="Hiện mật khẩu"
                     android:textColor="#3D88A0"
                     android:textSize="16sp" />
 
@@ -149,7 +149,7 @@
                     android:text="Facebook"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     app:backgroundTint="@null" />
 
@@ -166,7 +166,7 @@
                     android:text="Google"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     app:backgroundTint="@null" />
 

@@ -16,18 +16,19 @@
         android:scaleType="fitXY"
         app:srcCompat="@drawable/nen" />
 
-    <TextView
-        android:id="@+id/textView24"
-        android:layout_width="match_parent"
+    <Switch
+        android:id="@+id/switch_theme"
+        android:layout_width="387dp"
         android:layout_height="53dp"
-        android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginRight="32dp"
+        android:checked="false"
+        android:drawableStart="@drawable/mode"
         android:gravity="center"
-        android:textSize="18sp"
+        android:text="Chế độ tối"
         android:textColor="#061A85"
-        android:drawableStart="@drawable/ngonngu"
-        android:text="Ngôn ngữ" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView25"

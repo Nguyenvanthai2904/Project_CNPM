@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new ChartFragment());
             } else if (item.getItemId() == R.id.more) {
                 replaceFragment(new MoreFragment());
+
             }
 
             return true;

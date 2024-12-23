@@ -80,12 +80,13 @@
         <Button
             android:id="@+id/btn_Taonhom"
             android:layout_width="200dp"
-            android:layout_height="60dp"
+            android:layout_height="45dp"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:text="Tạo nhóm"
+            android:layout_marginTop="8dp"
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:background="@drawable/btn_login"
             app:backgroundTint="@null"/>
@@ -99,6 +100,7 @@
                 android:id="@+id/textView26"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:text="ID nhóm :"
                 android:textColor="#061A85"
@@ -109,6 +111,7 @@
                 android:id="@+id/edt_IDthamgia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="text" />
@@ -117,17 +120,19 @@
         <Button
             android:id="@+id/btn_Thamgia"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_gravity="center_horizontal"
             android:text="Tham gia"
-            android:textSize="25sp"
+            android:textSize="18sp"
             android:textStyle="bold"
+            android:layout_marginTop="8dp"
             android:background="@drawable/btn_login"
             app:backgroundTint="@null"/>
 
         <TextView
             android:id="@+id/textView15"
             android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
             android:layout_height="50dp"
             android:text="Nhóm của bạn :"
             android:textColor="#061A85"

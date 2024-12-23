@@ -1,8 +1,10 @@
 package com.example.moneymate;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,7 +42,7 @@ import android.content.Intent;
 public class GroupDetailActivity extends AppCompatActivity {
 
     private TextView tvGroupName, tvGroupID;
-    private EditText edit_monthlyAmount, edt_IDthhanhvien;
+    private EditText edt_IDthhanhvien;
     private Button buttonAdd;
     private TextView tvCreatorName;
     private ListView listViewMembers;
@@ -62,12 +65,12 @@ public class GroupDetailActivity extends AppCompatActivity {
 
         tvGroupName = findViewById(R.id.tvGroupName);
         tvGroupID = findViewById(R.id.tvGroupID);
-        edit_monthlyAmount = findViewById(R.id.edit_monthlyAmount);
         edt_IDthhanhvien = findViewById(R.id.edt_IDthhanhvien);
         buttonAdd = findViewById(R.id.button2);
         tvCreatorName = findViewById(R.id.tvt_Tentruongnhom);
         listViewMembers = findViewById(R.id.listViewMembers);
         TextView tvGroupExpensesInfo = findViewById(R.id.tv_viecchinhom);
+        TextView tvGroupIncomeInfo = findViewById(R.id.tv_Dongquy);
 
         db = FirebaseFirestore.getInstance();
 
@@ -94,9 +97,132 @@ public class GroupDetailActivity extends AppCompatActivity {
         tvGroupExpensesInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GroupDetailActivity.this, GroupExpensesActivity.class);
-                intent.putExtra("groupID", currentGroupID);
-                startActivity(intent);
+                Intent intent1 = new Intent(GroupDetailActivity.this, GroupExpensesActivity.class);
+                intent1.putExtra("groupID", currentGroupID);
+                finish();
+                startActivity(intent1);
+            }
+        });
+        tvGroupIncomeInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(GroupDetailActivity.this, incomegroups.class);
+                intent2.putExtra("groupID", currentGroupID);
+                finish();
+                startActivity(intent2);
+            }
+        });
+
+        // Thêm sự kiện click cho ListView
+        listViewMembers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedMemberName = membersList.get(position);
+                showDeleteConfirmationDialog(selectedMemberName);
+            }
+        });
+    }
+
+    // Phương thức hiển thị hộp thoại xác nhận xóa
+    private void showDeleteConfirmationDialog(String memberName) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Xóa thành viên");
+        builder.setMessage("Bạn có chắc chắn muốn xóa " + memberName + " khỏi nhóm?");
+
+        builder.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Xóa thành viên
+                deleteMember(memberName);
+            }
+        });
+
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Đóng hộp thoại
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    // Phương thức xóa thành viên
+    private void deleteMember(String memberName) {
+        // Lấy ID của thành viên từ membersList dựa trên tên
+        getMemberIdFromName(memberName, new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (task.isSuccessful()) {
+                    String memberId = task.getResult();
+                    if (memberId != null) {
+                        // Kiểm tra xem người dùng hiện tại có phải là trưởng nhóm không
+                        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                        if (currentUser != null && currentUser.getUid().equals(groupCreatorId)) {
+                            // Xóa thành viên khỏi nhóm
+                            removeMemberFromGroup(currentGroupID, memberId);
+                        } else {
+                            Toast.makeText(GroupDetailActivity.this, "Chỉ trưởng nhóm mới có thể xóa thành viên.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(GroupDetailActivity.this, "Không tìm thấy ID thành viên.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(GroupDetailActivity.this, "Lỗi khi lấy ID thành viên.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+    // Phương thức lấy ID thành viên từ tên
+    private void getMemberIdFromName(String memberName, OnCompleteListener<String> onCompleteListener) {
+        db.collection("users")
+                .whereEqualTo("name", memberName)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                onCompleteListener.onComplete(Tasks.forResult(document.getId()));
+                                return;
+                            }
+                            onCompleteListener.onComplete(Tasks.forResult(null)); // Không tìm thấy user
+                        } else {
+                            // Trả về Task<String> với giá trị null để biểu thị lỗi
+                            onCompleteListener.onComplete(Tasks.forResult(null));
+                            // Hoặc bạn có thể trả về một exception:
+                            // onCompleteListener.onComplete(Tasks.forException(task.getException()));
+                            Log.e(TAG, "Error getting member ID", task.getException());
+                        }
+                    }
+                });
+    }
+
+    // Phương thức xóa thành viên khỏi nhóm
+    private void removeMemberFromGroup(String groupID, String memberID) {
+        WriteBatch batch = db.batch();
+
+        // Cập nhật danh sách thành viên trong nhóm
+        DocumentReference groupRef = db.collection("groups").document(groupID);
+        batch.update(groupRef, "members", FieldValue.arrayRemove(memberID));
+
+        // Cập nhật danh sách nhóm của thành viên
+        DocumentReference userRef = db.collection("users").document(memberID);
+        batch.update(userRef, "groups", FieldValue.arrayRemove(groupID));
+
+        // Thực hiện batch
+        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(GroupDetailActivity.this, "Thành viên đã được xóa khỏi nhóm", Toast.LENGTH_SHORT).show();
+                    // Cập nhật lại danh sách thành viên
+                    loadGroupMembers(groupID);
+                } else {
+                    Toast.makeText(GroupDetailActivity.this, "Lỗi khi xóa thành viên", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -124,20 +250,6 @@ public class GroupDetailActivity extends AppCompatActivity {
                                 Log.d(TAG, "loadGroupData: Document does not contain 'members' field");
                             }
 
-                            // Get monthly amount
-                            if (documentSnapshot.contains("totalAmount")) {
-                                Long monthlyAmount = documentSnapshot.getLong("totalAmount");
-                                Log.d(TAG, "loadGroupData: Monthly amount: " + monthlyAmount);
-                                if (monthlyAmount != null) {
-                                    edit_monthlyAmount.setText(String.valueOf(monthlyAmount)+"VNĐ");
-                                } else {
-                                    edit_monthlyAmount.setText("0");
-                                    Log.d(TAG, "loadGroupData: Monthly amount is null");
-                                }
-                            } else {
-                                edit_monthlyAmount.setText("0");
-                                Log.d(TAG, "loadGroupData: Document does not contain 'totalAmount' field");
-                            }
                         } else {
                             Toast.makeText(GroupDetailActivity.this, "Group not found", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "loadGroupData: Group not found");
@@ -282,7 +394,7 @@ public class GroupDetailActivity extends AppCompatActivity {
             } else {
                 // User is not the creator, show error message
                 Log.d(TAG, "checkIfUserIsCreatorAndAddMember: User is not the creator");
-                Toast.makeText(GroupDetailActivity.this, "Only the group creator can add members.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GroupDetailActivity.this, "Chỉ nhóm trưởng mới thêm được thành viên.", Toast.LENGTH_SHORT).show();
             }
         } else {
             // No user is logged in

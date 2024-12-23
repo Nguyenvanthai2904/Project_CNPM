@@ -91,7 +91,6 @@ public class MoreFragment extends Fragment {
                         myIntent = new Intent(getActivity(), LoginActivity.class); // Activity mặc định
                         break;
                 }
-
                 startActivity(myIntent);
             }
         });

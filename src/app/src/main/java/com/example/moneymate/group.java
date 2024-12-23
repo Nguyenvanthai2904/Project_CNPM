@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class group extends AppCompatActivity {
 
-    private EditText groupNameEditText, groupIdEditText, monthlyAmountEditText, joinGroupIdEditText;
+    private EditText groupNameEditText, groupIdEditText, joinGroupIdEditText;
     private Button createGroupButton, joinGroupButton;
     private ListView groupListView;
     private ProgressBar loadingProgressBar;
@@ -51,7 +51,6 @@ public class group extends AppCompatActivity {
 
         groupNameEditText = findViewById(R.id.edt_Name);
         groupIdEditText = findViewById(R.id.edt_IDtao);
-        monthlyAmountEditText = findViewById(R.id.edt_Tienhangthang);
         createGroupButton = findViewById(R.id.btn_Taonhom);
         joinGroupIdEditText = findViewById(R.id.edt_IDthamgia);
         joinGroupButton = findViewById(R.id.btn_Thamgia);
@@ -64,7 +63,6 @@ public class group extends AppCompatActivity {
 
         groupNameList = new ArrayList<>();
         groupIDList = new ArrayList<>();
-        monthlyAmount = new ArrayList<>();
 
         groupAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, groupNameList);
         groupListView.setAdapter(groupAdapter);
@@ -81,7 +79,7 @@ public class group extends AppCompatActivity {
                 Intent intent = new Intent(group.this, GroupDetailActivity.class);
                 intent.putExtra("groupID", selectedGroupID);
                 intent.putExtra("groupName", selectedGroupName);
-
+                finish();
                 startActivity(intent);
             }
         });
@@ -163,20 +161,13 @@ public class group extends AppCompatActivity {
     private void createGroup() {
         String groupName = groupNameEditText.getText().toString().trim();
         String groupId = groupIdEditText.getText().toString().trim();
-        String monthlyAmountString = monthlyAmountEditText.getText().toString().trim();
 
-        if (TextUtils.isEmpty(groupName) || TextUtils.isEmpty(groupId) || TextUtils.isEmpty(monthlyAmountString)) {
+
+        if (TextUtils.isEmpty(groupName) || TextUtils.isEmpty(groupId)) {
             showToast("Please fill in all the fields.");
             return;
         }
 
-        long monthlyAmountLong;
-        try {
-            monthlyAmountLong = Long.parseLong(monthlyAmountString);
-        } catch (NumberFormatException e) {
-            showToast("Monthly amount must be a number.");
-            return;
-        }
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
@@ -187,7 +178,6 @@ public class group extends AppCompatActivity {
 
         Map<String, Object> groupData = new HashMap<>();
         groupData.put("name", groupName);
-        groupData.put("totalAmount", monthlyAmountLong);
         List<String> members = new ArrayList<>();
         members.add(uid);
         groupData.put("members", members);
@@ -289,6 +279,6 @@ public class group extends AppCompatActivity {
     private void clearInputFields() {
         groupNameEditText.setText("");
         groupIdEditText.setText("");
-        monthlyAmountEditText.setText("");
+
     }
 }

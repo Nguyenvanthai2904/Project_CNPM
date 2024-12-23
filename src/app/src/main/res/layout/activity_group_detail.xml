@@ -45,33 +45,6 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView22"
-                    android:layout_width="270dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:text="Tổng tiền của nhóm :"
-                    android:textColor="#18A1DE"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/edit_monthlyAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:textColor="@color/black" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:orientation="horizontal">
 
@@ -119,19 +92,38 @@
     <ListView
         android:id="@+id/listViewMembers"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1dp" />
 
-    <TextView
-        android:id="@+id/tv_viecchinhom"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center"
-        android:text="Thông tin chi tiêu của nhóm"
-        android:textColor="#169EDC"
-        android:textColorHighlight="#0C91CC"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_Dongquy"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Đóng quỹ"
+            android:textColor="#1B99D1"
+            android:textColorHighlight="#1698D1"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tv_viecchinhom"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Chi tiêu"
+            android:textColor="#179FDB"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+    </LinearLayout>
+
 </LinearLayout>

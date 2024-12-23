@@ -14,17 +14,18 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp">
-            <TextView
-                android:id="@+id/tv_group_expenses_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Group Expenses"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_marginBottom="16dp"/>
 
             <!-- Row for Date -->
+            <TextView
+                android:id="@+id/tv_group_income_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:text="Group Income"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -43,7 +44,7 @@
                     android:textStyle="normal" />
 
                 <EditText
-                    android:id="@+id/edtDate_ngaygroupexpenses"
+                    android:id="@+id/edtDate_ngaygroupincome"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -66,14 +67,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:fontFamily="sans-serif"
-                    android:text="Tiền chi"
+                    android:text="Tiền nạp"
                     android:textAlignment="center"
                     android:textColor="#061A85"
                     android:textSize="24sp"
                     android:textStyle="normal" />
 
                 <EditText
-                    android:id="@+id/edtNb_tienchigroup"
+                    android:id="@+id/edtNb_tienthugroup"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -82,38 +83,14 @@
 
             </TableRow>
 
-            <!-- Category Text -->
-            <TextView
-                android:id="@+id/textView82"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="sans-serif"
-                android:paddingLeft="32dp"
-                android:text="Danh mục"
-                android:textColor="#061A85"
-                android:textSize="16dp"
-                android:textStyle="normal" />
-
-            <!-- GridView for Categories -->
-
-            <!-- Button for Submit -->
-            <GridView
-                android:id="@+id/gv_groupchi"
-                android:layout_width="match_parent"
-                android:layout_height="337dp"
-                android:layout_marginTop="20dp"
-                android:numColumns="3"
-                android:verticalSpacing="16dp"
-                android:visibility="visible" />
 
             <Button
-                android:id="@+id/btn_tienchigroup"
+                android:id="@+id/btn_tienthugroup"
                 android:layout_width="250dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:fontFamily="sans-serif"
-                android:text="Thêm tiền chi"
+                android:text="Nạp quỹ"
                 android:textAllCaps="true"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -131,28 +108,8 @@
                     android:text="Tổng tiền"
                     android:textColor="#1181B3"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView84"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="Tiền chi"
-                    android:textColor="#0D7CAD"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView85"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="Tiền thừa"
-                    android:textColor="#0F8CC3"
-                    android:textColorHighlight="#0B95D1"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:gravity="center"/>
 
             </LinearLayout>
 
@@ -162,7 +119,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/edt_tongtiengroup"
+                    android:id="@+id/edt_tongtiengroupin"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -170,26 +127,9 @@
                     android:inputType="text"
                     android:textSize="20sp" />
 
-                <EditText
-                    android:id="@+id/edt_tongtienchigroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:textSize="20sp" />
-
-                <EditText
-                    android:id="@+id/edt_tienthuagroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:textSize="20sp" />
             </LinearLayout>
             <ListView
-                android:id="@+id/lv_group_expenses"
+                android:id="@+id/lv_group_income"
                 android:layout_width="match_parent"
                 android:layout_height="1000dp" />
 

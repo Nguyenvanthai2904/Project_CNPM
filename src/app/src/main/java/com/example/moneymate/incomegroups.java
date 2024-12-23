@@ -16,12 +16,20 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class incomegroups extends AppCompatActivity {
@@ -87,18 +95,24 @@ public class incomegroups extends AppCompatActivity {
                     // Format the selected date
                     String formattedDate = selectedYear + "-" + String.format("%02d", (selectedMonth + 1)) + "-" + String.format("%02d", selectedDay);
 
-                    // Get the current date
-                    Calendar today = Calendar.getInstance();
-                    today.set(Calendar.HOUR_OF_DAY, 0);
-                    today.set(Calendar.MINUTE, 0);
-                    today.set(Calendar.SECOND, 0);
-                    today.set(Calendar.MILLISECOND, 0);
-
                     // Create a Calendar object for the selected date
                     Calendar selectedDate = Calendar.getInstance();
                     selectedDate.set(selectedYear, selectedMonth, selectedDay);
 
-                    // Check if the selected date is in the future
+                    // Set the time of selectedDate to 00:00:00
+                    selectedDate.set(Calendar.HOUR_OF_DAY, 0);
+                    selectedDate.set(Calendar.MINUTE, 0);
+                    selectedDate.set(Calendar.SECOND, 0);
+                    selectedDate.set(Calendar.MILLISECOND, 0);
+
+                    // Create a Calendar object for today
+                    Calendar today = Calendar.getInstance();
+                    // Set the time of today to 00:00:00
+                    today.set(Calendar.HOUR_OF_DAY, 0);
+                    today.set(Calendar.MINUTE, 0);
+                    today.set(Calendar.SECOND, 0);
+                    today.set(Calendar.MILLISECOND, 0);
+                    // Check if the selected date is in the future (after today)
                     if (selectedDate.after(today)) {
                         Toast.makeText(this, "Ngày không thể là trong tương lai!", Toast.LENGTH_SHORT).show();
                         edtDategroupin.setText(""); // Clear the EditText
@@ -107,8 +121,8 @@ public class incomegroups extends AppCompatActivity {
                     }
                 }, year, month, day);
 
-        // Set the maximum date to the current date
-        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis()+1000);
+        // Set the maximum date to the current date (without modifying time)
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
         datePickerDialog.show();
     }
 
@@ -152,6 +166,7 @@ public class incomegroups extends AppCompatActivity {
                                     Toast.makeText(incomegroups.this, "Income added successfully", Toast.LENGTH_SHORT).show();
                                     edtDategroupin.setText("");
                                     edtTienthugroup.setText("");
+                                    loadIncomes(); // Reload incomes to show the updated list
                                 })
                                 .addOnFailureListener(e -> {
                                     Toast.makeText(incomegroups.this, "Error adding income: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -166,21 +181,47 @@ public class incomegroups extends AppCompatActivity {
 
     private void loadIncomes() {
         dbgroupin.collection("groups").document(groupId).collection("incomes")
+                .orderBy("date", Query.Direction.DESCENDING)
                 .addSnapshotListener((snapshots, e) -> {
                     if (e != null) {
                         Log.e("FirestoreError", "Listen failed.", e);
                         return;
                     }
 
-                    incomeList.clear();
+                    List<Map<String, Object>> incomesData = new ArrayList<>();
                     double totalIncome = 0;
 
                     if (snapshots != null) {
-                        for (DocumentSnapshot doc : snapshots) {
-                            String date = doc.getString("date");
-                            String userName = doc.getString("userName");
-                            double money = doc.getDouble("money");
-                            totalIncome += money;
+                        for (QueryDocumentSnapshot doc : snapshots) {
+                            incomesData.add(doc.getData());
+                            Double money = doc.getDouble("money");
+                            if (money != null) {
+                                totalIncome += money;
+                            }
+                        }
+
+                        // Sort incomes by date in descending order
+                        Collections.sort(incomesData, new Comparator<Map<String, Object>>() {
+                            final SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                            @Override
+                            public int compare(Map<String, Object> map1, Map<String, Object> map2) {
+                                try {
+                                    Date date1 = f.parse((String) map1.get("date"));
+                                    Date date2 = f.parse((String) map2.get("date"));
+                                    return date2.compareTo(date1); // Descending order
+                                } catch (ParseException ex) {
+                                    Log.e("ParseError", "Error parsing date", ex);
+                                    return 0;
+                                }
+                            }
+                        });
+
+                        incomeList.clear();
+                        for (Map<String, Object> data : incomesData) {
+                            String date = (String) data.get("date");
+                            String userName = (String) data.get("userName");
+                            double money = (Double) data.get("money");
 
                             String incomeInfo = "Date: " + date + "\nUser: " + userName + "\nMoney: " + String.format("%.0f", money) + "VNĐ";
                             incomeList.add(incomeInfo);

@@ -20,11 +20,18 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.Query;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class GroupExpensesActivity extends AppCompatActivity {
@@ -180,10 +187,38 @@ public class GroupExpensesActivity extends AppCompatActivity {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 (view, selectedYear, selectedMonth, selectedDay) -> {
+                    // Format the selected date
                     String formattedDate = selectedYear + "-" + String.format("%02d", (selectedMonth + 1)) + "-" + String.format("%02d", selectedDay);
-                    edtDategroup.setText(formattedDate);
+
+                    // Create a Calendar object for the selected date
+                    Calendar selectedDate = Calendar.getInstance();
+                    selectedDate.set(selectedYear, selectedMonth, selectedDay);
+
+                    // Set the time of selectedDate to 00:00:00
+                    selectedDate.set(Calendar.HOUR_OF_DAY, 0);
+                    selectedDate.set(Calendar.MINUTE, 0);
+                    selectedDate.set(Calendar.SECOND, 0);
+                    selectedDate.set(Calendar.MILLISECOND, 0);
+
+                    // Create a Calendar object for today
+                    Calendar today = Calendar.getInstance();
+                    // Set the time of today to 00:00:00
+                    today.set(Calendar.HOUR_OF_DAY, 0);
+                    today.set(Calendar.MINUTE, 0);
+                    today.set(Calendar.SECOND, 0);
+                    today.set(Calendar.MILLISECOND, 0);
+
+                    // Check if the selected date is in the future (after today)
+                    if (selectedDate.after(today)) {
+                        Toast.makeText(this, "Ngày không thể là trong tương lai!", Toast.LENGTH_SHORT).show();
+                        edtDategroup.setText(""); // Clear the EditText
+                    } else {
+                        edtDategroup.setText(formattedDate); // Update EditText with selected date
+                    }
                 }, year, month, day);
 
+        // Set the maximum date to the current date
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
         datePickerDialog.show();
     }
 
@@ -239,30 +274,43 @@ public class GroupExpensesActivity extends AppCompatActivity {
 
     private void loadExpenses() {
         dbgroup.collection("groups").document(groupId).collection("expenses")
+                .orderBy("date", Query.Direction.DESCENDING) // Order by date in descending order
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    List<String> newExpensesList = new ArrayList<>();
-
+                    List<Map<String, Object>> expensesData = new ArrayList<>();
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        String date = document.getString("date");
-                        Double money = document.getDouble("money");
-                        String service = document.getString("service");
+                        expensesData.add(document.getData());
+                    }
+
+                    // Sort the expenses by date in descending order
+                    Collections.sort(expensesData, new Comparator<Map<String, Object>>() {
+                        final SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                        @Override
+                        public int compare(Map<String, Object> map1, Map<String, Object> map2) {
+                            try {
+                                Date date1 = f.parse((String) map1.get("date"));
+                                Date date2 = f.parse((String) map2.get("date"));
+                                return date2.compareTo(date1); // Descending order
+                            } catch (ParseException e) {
+                                Log.e("ParseError", "Error parsing date", e);
+                                return 0;
+                            }
+                        }
+                    });
+
+                    List<String> newExpensesList = new ArrayList<>();
+                    for (Map<String, Object> data : expensesData) {
+                        String date = (String) data.get("date");
+                        Double money = (Double) data.get("money");
+                        String service = (String) data.get("service");
 
                         if (date != null && money != null && service != null) {
                             String formattedMoney = String.format("%.0f", money);
-                            String expense = "Date: " + date + "- Money: " + formattedMoney + "VNĐ" + "- Service: " + service;
+                            String expense = "Date: " + date + " - Money: " + formattedMoney + "VNĐ" + " - Service: " + service;
                             newExpensesList.add(expense);
                         } else {
-                            Log.w("FirestoreError", "Missing data in document: " + document.getId());
-                            if (date == null) {
-                                newExpensesList.add("Error: Date missing");
-                            }
-                            if (money == null) {
-                                newExpensesList.add("Error: Money missing");
-                            }
-                            if (service == null) {
-                                newExpensesList.add("Error: Service missing");
-                            }
+                            Log.w("FirestoreError", "Missing data in document");
                         }
                     }
 

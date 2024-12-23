@@ -17,8 +17,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.Date;
 
 public class CalendarFragment extends Fragment {
 
@@ -54,8 +58,13 @@ public class CalendarFragment extends Fragment {
         eventList = new ArrayList<>();
         adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, eventList);
 
-
         eventListView.setAdapter(adapter);
+
+        // Get the current date
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+        // Fetch events and totals for the current date initially
+        fetchEventsAndTotalsForDate(currentDate);
 
         // Set CalendarView date change listener
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {

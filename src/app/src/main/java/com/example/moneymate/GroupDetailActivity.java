@@ -99,7 +99,7 @@ public class GroupDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent1 = new Intent(GroupDetailActivity.this, GroupExpensesActivity.class);
                 intent1.putExtra("groupID", currentGroupID);
-                finish();
+                
                 startActivity(intent1);
             }
         });
@@ -108,7 +108,7 @@ public class GroupDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent2 = new Intent(GroupDetailActivity.this, incomegroups.class);
                 intent2.putExtra("groupID", currentGroupID);
-                finish();
+
                 startActivity(intent2);
             }
         });

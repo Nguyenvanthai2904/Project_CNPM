@@ -79,7 +79,6 @@ public class group extends AppCompatActivity {
                 Intent intent = new Intent(group.this, GroupDetailActivity.class);
                 intent.putExtra("groupID", selectedGroupID);
                 intent.putExtra("groupName", selectedGroupName);
-                finish();
                 startActivity(intent);
             }
         });

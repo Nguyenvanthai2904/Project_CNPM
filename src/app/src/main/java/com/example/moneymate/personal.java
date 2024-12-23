@@ -54,7 +54,7 @@ public class personal extends AppCompatActivity {
                 String idToCopy = edtIDcanhan.getText().toString();
                 if (!idToCopy.isEmpty()) {
                     copyToClipboard(idToCopy);
-                    Toast.makeText(personal.this, "ID copied to clipboard", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(personal.this, "ID đã được copy", Toast.LENGTH_SHORT).show();
                 }
             });
 

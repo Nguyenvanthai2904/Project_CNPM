@@ -124,10 +124,7 @@ public class ChartFragment extends Fragment {
 
 
     private void fetchMonthlyTotals(String selectedMonth, String selectedYear) {
-        if (currentUserId == null) {
-            Toast.makeText(getContext(), "User not logged in", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
 
         AtomicReference<Double> totalIncomes = new AtomicReference<>((double) 0);
         AtomicReference<Double> totalExpenses = new AtomicReference<>((double) 0);
@@ -172,14 +169,14 @@ public class ChartFragment extends Fragment {
                     try {
                         return Double.parseDouble(moneyStr);
                     } catch (NumberFormatException e) {
-                        Log.w("ChartFragment","Invalid number",e);
+                        Log.w("ChartFragment","Số không hợp lệ",e);
                     }
                 }
 
             }
 
         } catch (ParseException e) {
-            Log.w("ChartFragment", "Invalid date format", e);
+            Log.w("ChartFragment", "Định dạng ngày không hợp lệ", e);
         }
         return 0; // or handle the error as needed
     }
@@ -187,8 +184,8 @@ public class ChartFragment extends Fragment {
 
 
     private void handleError(Exception e) {
-        Toast.makeText(getContext(), "Error fetching data", Toast.LENGTH_SHORT).show();
-        Log.e("ChartFragment", "Firestore query error", e);
+        Toast.makeText(getContext(), "Lỗi khi lấy dữ liệu", Toast.LENGTH_SHORT).show();
+        Log.e("ChartFragment", "Lỗi truy vấn Firestore", e);
     }
 
     private void updateChart(double totalIncomes, double totalExpenses) {

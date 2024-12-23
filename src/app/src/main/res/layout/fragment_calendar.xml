@@ -106,7 +106,7 @@
             android:id="@+id/eventListView"
             android:layout_width="match_parent"
             android:layout_height="1000dp"
-            android:background="@drawable/hinhnenthongke"
+            android:background="@drawable/calendar"
             android:divider="@android:color/darker_gray"
             android:dividerHeight="1dp"
             android:padding="8dp" />

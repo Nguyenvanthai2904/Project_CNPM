@@ -83,10 +83,10 @@ public class SignupActivity extends AppCompatActivity {
                         user.put("email", email);
 
                         db.collection("users").document(userId).set(user)
-                                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Account created successfully!", Toast.LENGTH_SHORT).show())
-                                .addOnFailureListener(e -> Toast.makeText(this, "Failed to save user data", Toast.LENGTH_SHORT).show());
+                                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Tài khoản đã được tạo thành công!", Toast.LENGTH_SHORT).show())
+                                .addOnFailureListener(e -> Toast.makeText(this, "Lưu dữ liệu người dùng không thành công", Toast.LENGTH_SHORT).show());
                     } else {
-                        Toast.makeText(this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Đăng ký thất bại: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }

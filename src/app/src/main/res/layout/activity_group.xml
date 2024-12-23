@@ -37,7 +37,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Name :"
-                android:textColor="#061A85"
+                android:textColor="#1392CA"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -63,7 +63,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="ID :"
-                android:textColor="#061A85"
+                android:textColor="#1392CA"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -103,7 +103,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:text="ID nhóm :"
-                android:textColor="#061A85"
+                android:textColor="#1392CA"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -132,10 +132,10 @@
         <TextView
             android:id="@+id/textView15"
             android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
             android:layout_height="50dp"
+            android:layout_marginTop="8dp"
             android:text="Nhóm của bạn :"
-            android:textColor="#061A85"
+            android:textColor="#1392CA"
             android:textSize="25sp"
             android:textStyle="bold" />
 

@@ -56,7 +56,7 @@ public class incomegroups extends AppCompatActivity {
         Intent intent1 = getIntent();
         groupId = intent1.getStringExtra("groupID");
         if (groupId == null) {
-            Toast.makeText(this, "Error: Group ID not provided.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Lỗi: ID nhóm chưa được cung cấp.", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -117,7 +117,7 @@ public class incomegroups extends AppCompatActivity {
         String moneyString = edtTienthugroup.getText().toString();
 
         if (date.isEmpty() || moneyString.isEmpty()) {
-            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Vui lòng điền tất cả các trường", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -125,7 +125,7 @@ public class incomegroups extends AppCompatActivity {
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
-            Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Người dùng chưa đăng nhập.", Toast.LENGTH_SHORT).show();
             return;
         }
         String userId = currentUser.getUid();
@@ -149,17 +149,17 @@ public class incomegroups extends AppCompatActivity {
                         dbgroupin.collection("groups").document(groupId).collection("incomes")
                                 .add(incomeData)
                                 .addOnSuccessListener(documentReference -> {
-                                    Toast.makeText(incomegroups.this, "Income added successfully", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(incomegroups.this, "Thu nhập đã được thêm thành công", Toast.LENGTH_SHORT).show();
                                     edtDategroupin.setText("");
                                     edtTienthugroup.setText("");
                                 })
                                 .addOnFailureListener(e -> {
-                                    Toast.makeText(incomegroups.this, "Error adding income: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    Log.e("FirestoreError", "Error adding income", e);
+                                    Toast.makeText(incomegroups.this, "Lỗi khi thêm thu nhập: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Log.e("FirestoreError", "Lỗi khi thêm thu nhập", e);
                                 });
                     } else {
-                        Log.e("FirestoreError", "Error getting user data: ", userTask.getException());
-                        Toast.makeText(this, "Failed to retrieve user info.", Toast.LENGTH_SHORT).show();
+                        Log.e("FirestoreError", "Lỗi khi lấy dữ liệu người dùng: ", userTask.getException());
+                        Toast.makeText(this, "Lấy thông tin người dùng thất bại.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

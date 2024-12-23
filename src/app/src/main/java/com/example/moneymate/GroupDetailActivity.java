@@ -194,7 +194,7 @@ public class GroupDetailActivity extends AppCompatActivity {
                             onCompleteListener.onComplete(Tasks.forResult(null));
                             // Hoặc bạn có thể trả về một exception:
                             // onCompleteListener.onComplete(Tasks.forException(task.getException()));
-                            Log.e(TAG, "Error getting member ID", task.getException());
+                            Log.e(TAG, "Lỗi khi lấy ID thành viên", task.getException());
                         }
                     }
                 });
@@ -228,39 +228,39 @@ public class GroupDetailActivity extends AppCompatActivity {
     }
 
     private void loadGroupData(String groupID) {
-        Log.d(TAG, "loadGroupData called for groupID: " + groupID);
+        Log.d(TAG, "loadGroupData gọi cho groupID: " + groupID);
         db.collection("groups").document(groupID)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Log.d(TAG, "loadGroupData: Document exists: " + documentSnapshot.exists());
+                        Log.d(TAG, "loadGroupData:  Tài liệu đã tồn tại: " + documentSnapshot.exists());
                         if (documentSnapshot.exists()) {
                             // Get group creator ID
                             if (documentSnapshot.contains("members")) {
                                 List<String> members = (List<String>) documentSnapshot.get("members");
                                 if (members != null && !members.isEmpty()) {
                                     groupCreatorId = members.get(0); // Store the creator ID here
-                                    Log.d(TAG, "loadGroupData: Creator ID: " + groupCreatorId);
+                                    Log.d(TAG, "loadGroupData: ID người tạo: " + groupCreatorId);
                                     fetchAndDisplayCreatorName(groupCreatorId);
                                 } else {
-                                    Log.d(TAG, "loadGroupData: Members list is empty or null");
+                                    Log.d(TAG, "loadGroupData: Danh sách thành viên trống");
                                 }
                             } else {
                                 Log.d(TAG, "loadGroupData: Document does not contain 'members' field");
                             }
 
                         } else {
-                            Toast.makeText(GroupDetailActivity.this, "Group not found", Toast.LENGTH_SHORT).show();
-                            Log.d(TAG, "loadGroupData: Group not found");
+                            Toast.makeText(GroupDetailActivity.this, "Không tìm thấy nhóm", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "loadGroupData: Không tìm thấy nhóm");
                         }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(GroupDetailActivity.this, "Error loading group data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "Error loading group data", e);
+                        Toast.makeText(GroupDetailActivity.this, "Lỗi khi tải dữ liệu nhóm: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "Lỗi khi tải dữ liệu nhóm", e);
                     }
                 });
     }
@@ -272,24 +272,24 @@ public class GroupDetailActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Log.d(TAG, "fetchAndDisplayCreatorName: Document exists: " + documentSnapshot.exists());
+                        Log.d(TAG, "fetchAndDisplayCreatorName: Tài liệu đã tồn tại: " + documentSnapshot.exists());
                         if (documentSnapshot.exists()) {
                             if (documentSnapshot.contains("name")) {
                                 String creatorName = documentSnapshot.getString("name");
-                                Log.d(TAG, "fetchAndDisplayCreatorName: Creator name: " + creatorName);
+                                Log.d(TAG, "fetchAndDisplayCreatorName: Tên người dùng: " + creatorName);
                                 if (creatorName != null) {
                                     tvCreatorName.setText("Trưởng nhóm: " + creatorName);
                                 } else {
                                     tvCreatorName.setText("Trưởng nhóm: N/A");
-                                    Log.d(TAG, "fetchAndDisplayCreatorName: Creator name is null");
+                                    Log.d(TAG, "fetchAndDisplayCreatorName: Tên người dùng trống");
                                 }
                             } else {
                                 tvCreatorName.setText("Trưởng nhóm: N/A");
-                                Log.d(TAG, "fetchAndDisplayCreatorName: Document does not contain 'username' field");
+                                Log.d(TAG, "fetchAndDisplayCreatorName: Tài liệu không chứa trường 'username'");
                             }
                         } else {
                             tvCreatorName.setText("Trưởng nhóm: N/A");
-                            Log.d(TAG, "fetchAndDisplayCreatorName: User document not found");
+                            Log.d(TAG, "fetchAndDisplayCreatorName: Không tìm thấy tài liệu người dùng");
                         }
                     }
                 })
@@ -317,23 +317,23 @@ public class GroupDetailActivity extends AppCompatActivity {
                     }
 
                     if (documentSnapshot != null && documentSnapshot.exists()) {
-                        Log.d(TAG, "loadGroupMembers: Current data: " + documentSnapshot.getData());
+                        Log.d(TAG, "loadGroupMembers: Dữ liệu hiện tại: " + documentSnapshot.getData());
                         if (documentSnapshot.contains("members")) {
                             List<String> members = (List<String>) documentSnapshot.get("members");
                             if (members != null && !members.isEmpty()) {
                                 fetchMemberNames(members);
                             } else {
-                                Log.d(TAG, "loadGroupMembers: members is null or empty");
+                                Log.d(TAG, "loadGroupMembers: members rỗng");
                                 membersList.clear();
                                 runOnUiThread(() -> membersAdapter.notifyDataSetChanged());
                             }
                         } else {
-                            Log.d(TAG, "loadGroupMembers: Document does not contain 'members' field");
+                            Log.d(TAG, "loadGroupMembers: Tài liệu không chứa trường 'members");
                             membersList.clear();
                             runOnUiThread(() -> membersAdapter.notifyDataSetChanged());
                         }
                     } else {
-                        Log.d(TAG, "loadGroupMembers: No such document or snapshot is null");
+                        Log.d(TAG, "loadGroupMembers: Không có tài liệu nào");
                         membersList.clear();
                         runOnUiThread(() -> membersAdapter.notifyDataSetChanged());
                     }
@@ -353,22 +353,22 @@ public class GroupDetailActivity extends AppCompatActivity {
             for (Object object : objects) {
                 DocumentSnapshot document = (DocumentSnapshot) object;
                 if (document.exists()) {
-                    Log.d(TAG, "fetchMemberNames: Member document exists: " + document.getId());
+                    Log.d(TAG, "fetchMemberNames: Tài liệu thành viên đã tồn tại: " + document.getId());
                     if (document.contains("name")) {
                         String memberName = document.getString("name");
-                        Log.d(TAG, "fetchMemberNames: Member name: " + memberName);
+                        Log.d(TAG, "fetchMemberNames: Tên thành viên: " + memberName);
                         if (memberName != null) {
                             membersList.add(memberName);
                         } else {
-                            Log.d(TAG, "fetchMemberNames: Member name is null");
+                            Log.d(TAG, "fetchMemberNames: Tên thành viên bị trống");
                             membersList.add("Unknown User");
                         }
                     } else {
-                        Log.d(TAG, "fetchMemberNames: Member document does not contain 'username' field");
+                        Log.d(TAG, "fetchMemberNames: Tài liệu thành viên không chứa trường 'username");
                         membersList.add("Unknown User");
                     }
                 } else {
-                    Log.d(TAG, "fetchMemberNames: Member document does not exist: " + document.getId());
+                    Log.d(TAG, "fetchMemberNames: Tài liệu thành viên không tồn tại: " + document.getId());
                     membersList.add("Unknown User");
                 }
             }
@@ -380,8 +380,8 @@ public class GroupDetailActivity extends AppCompatActivity {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             String currentUserId = currentUser.getUid();
-            Log.d(TAG, "checkIfUserIsCreatorAndAddMember: Current User ID: " + currentUserId);
-            Log.d(TAG, "checkIfUserIsCreatorAndAddMember: Group Creator ID: " + groupCreatorId);
+            Log.d(TAG, "checkIfUserIsCreatorAndAddMember: ID người dùng hiện tại: " + currentUserId);
+            Log.d(TAG, "checkIfUserIsCreatorAndAddMember: ID người tạo nhóm: " + groupCreatorId);
 
             if (currentUserId.equals(groupCreatorId)) {
                 // User is the creator, proceed to add member
@@ -389,11 +389,11 @@ public class GroupDetailActivity extends AppCompatActivity {
                 if (!memberID.isEmpty()) {
                     addMemberToGroup(currentGroupID, memberID);
                 } else {
-                    Toast.makeText(GroupDetailActivity.this, "Please enter a User ID", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GroupDetailActivity.this, "Vui lòng nhập ID người dùng", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 // User is not the creator, show error message
-                Log.d(TAG, "checkIfUserIsCreatorAndAddMember: User is not the creator");
+                Log.d(TAG, "checkIfUserIsCreatorAndAddMember: Người dùng không phải là người tạo");
                 Toast.makeText(GroupDetailActivity.this, "Chỉ nhóm trưởng mới thêm được thành viên.", Toast.LENGTH_SHORT).show();
             }
         } else {
@@ -412,7 +412,7 @@ public class GroupDetailActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot userDocument = task.getResult();
                     if (userDocument.exists()) {
-                        Log.d(TAG, "addMemberToGroup: User exists: " + memberID);
+                        Log.d(TAG, "addMemberToGroup: Người dùng tồn tại: " + memberID);
 
                         db.collection("groups").document(groupID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
@@ -422,8 +422,8 @@ public class GroupDetailActivity extends AppCompatActivity {
                                     if (groupDocument.exists()) {
                                         List<String> members = (List<String>) groupDocument.get("members");
                                         if (members != null && members.contains(memberID)) {
-                                            Log.d(TAG, "addMemberToGroup: User is already a member of the group");
-                                            Toast.makeText(GroupDetailActivity.this, "User is already a member of the group", Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "addMemberToGroup: Người dùng đã là thành viên của nhóm");
+                                            Toast.makeText(GroupDetailActivity.this, "Người dùng đã là thành viên của nhóm", Toast.LENGTH_SHORT).show();
                                         } else {
                                             WriteBatch batch = db.batch();
 
@@ -437,33 +437,33 @@ public class GroupDetailActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
-                                                        Toast.makeText(GroupDetailActivity.this, "Member added successfully", Toast.LENGTH_SHORT).show();
-                                                        Log.d(TAG, "addMemberToGroup: Member added successfully");
+                                                        Toast.makeText(GroupDetailActivity.this, "Đã thêm thành viên thành công", Toast.LENGTH_SHORT).show();
+                                                        Log.d(TAG, "addMemberToGroup: Đã thêm thành viên thành công");
                                                         edt_IDthhanhvien.setText("");
                                                     } else {
-                                                        Toast.makeText(GroupDetailActivity.this, "Failed to add member", Toast.LENGTH_SHORT).show();
-                                                        Log.e(TAG, "addMemberToGroup: Failed to add member", task.getException());
+                                                        Toast.makeText(GroupDetailActivity.this, "Thêm thành viên không thành công", Toast.LENGTH_SHORT).show();
+                                                        Log.e(TAG, "addMemberToGroup: Thêm thành viên không thành công", task.getException());
                                                     }
                                                 }
                                             });
                                         }
                                     } else {
-                                        Log.d(TAG, "addMemberToGroup: Group document does not exist");
-                                        Toast.makeText(GroupDetailActivity.this, "Group does not exist", Toast.LENGTH_SHORT).show();
+                                        Log.d(TAG, "addMemberToGroup: Tài liệu nhóm không tồn tại");
+                                        Toast.makeText(GroupDetailActivity.this, "Nhóm không tồn tại", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
                                     Log.e(TAG, "addMemberToGroup: Error checking group membership", groupTask.getException());
-                                    Toast.makeText(GroupDetailActivity.this, "Error checking group membership", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(GroupDetailActivity.this, "Lỗi kiểm tra tư cách thành viên nhóm.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
                     } else {
-                        Log.d(TAG, "addMemberToGroup: User does not exist: " + memberID);
-                        Toast.makeText(GroupDetailActivity.this, "User does not exist", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "addMemberToGroup: Người dùng không tồn tại: " + memberID);
+                        Toast.makeText(GroupDetailActivity.this, "Người dùng không tồn tại", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Log.e(TAG, "addMemberToGroup: Error checking user", task.getException());
-                    Toast.makeText(GroupDetailActivity.this, "Error checking user", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "addMemberToGroup: Lỗi kiểm tra người dùng", task.getException());
+                    Toast.makeText(GroupDetailActivity.this, "Lỗi kiểm tra người dùng.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -474,7 +474,7 @@ public class GroupDetailActivity extends AppCompatActivity {
         super.onDestroy();
         if (membersListener != null) {
             membersListener.remove();
-            Log.d(TAG, "onDestroy: membersListener removed");
+            Log.d(TAG, "onDestroy: đã gỡ bỏ members Listener.");
         }
     }
 }

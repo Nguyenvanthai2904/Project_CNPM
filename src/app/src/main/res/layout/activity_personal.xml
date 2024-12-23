@@ -37,7 +37,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Name :"
-                android:textColor="#3D88A0"
+                android:textColor="#1392CA"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 

@@ -41,7 +41,7 @@
                     android:fontFamily="sans-serif"
                     android:text="Ngày"
                     android:textAlignment="center"
-                    android:textColor="#061A85"
+                    android:textColor="#1392CA"
                     android:textSize="24sp"
                     android:textStyle="normal" />
 
@@ -71,7 +71,7 @@
                     android:fontFamily="sans-serif"
                     android:text="Tiền nạp"
                     android:textAlignment="center"
-                    android:textColor="#061A85"
+                    android:textColor="#1392CA"
                     android:textSize="24sp"
                     android:textStyle="normal" />
 
@@ -130,6 +130,8 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:focusable="false"
+                    android:clickable="false"
                     android:inputType="text"
                     android:textSize="20sp" />
 

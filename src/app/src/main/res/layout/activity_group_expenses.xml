@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="1000dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ScrollView
@@ -14,15 +15,17 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp">
+
             <TextView
                 android:id="@+id/tv_group_expenses_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Group Expenses"
-                android:textSize="24sp"
-                android:textStyle="bold"
+                android:layout_marginBottom="16dp"
                 android:gravity="center"
-                android:layout_marginBottom="16dp"/>
+                android:text="Group Expenses"
+                android:textColor="#3D88A0"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <!-- Row for Date -->
             <TableRow
@@ -116,11 +119,14 @@
                 android:text="Thêm tiền chi"
                 android:textAllCaps="true"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:background="@drawable/btn_login"
+                app:backgroundTint="@null"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
                 <TextView

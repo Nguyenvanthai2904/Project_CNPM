@@ -20,7 +20,7 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:text="Thông tin cá nhân"
-            android:textColor="#1CABEB"
+            android:textColor="#3D88A0"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Name :"
-                android:textColor="#159FDC"
+                android:textColor="#3D88A0"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -76,6 +76,7 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginRight="16dp"
                 android:clickable="false"
                 android:ems="10"
                 android:focusable="false"
@@ -86,10 +87,10 @@
             <ImageButton
                 android:id="@+id/btn_copy_id"
                 android:layout_width="20dp"
-                android:layout_height="25dp"
+                android:layout_height="36dp"
                 android:layout_gravity="center|center_vertical|end"
                 android:contentDescription="Copy ID"
-
+                android:layout_marginRight="16dp"
                 android:src="@drawable/ic_copy" />
 
         </LinearLayout>
@@ -99,6 +100,6 @@
             android:layout_width="wrap_content"
             android:layout_height="580dp"
             android:scaleType="fitXY"
-            android:src="@drawable/bkgroungcanhan" />
+            android:src="@drawable/group" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

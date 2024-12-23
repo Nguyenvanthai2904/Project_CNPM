@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@drawable/backgroupnhom"
+    android:background="@drawable/group"
     tools:context=".group">
 
     <LinearLayout
@@ -21,7 +21,7 @@
             android:layout_height="50dp"
             android:gravity="center"
             android:text="Nhập thông tin tạo nhóm"
-            android:textColor="#077AAD"
+            android:textColor="#3D88A0"
             android:textSize="25sp"
             android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Name :"
-                android:textColor="#1585B8"
+                android:textColor="#061A85"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -63,7 +63,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="ID :"
-                android:textColor="#0D658C"
+                android:textColor="#061A85"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -86,7 +86,9 @@
             android:text="Tạo nhóm"
             android:textColor="@color/white"
             android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:background="@drawable/btn_login"
+            app:backgroundTint="@null"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,7 +101,7 @@
                 android:layout_height="30dp"
                 android:layout_weight="1"
                 android:text="ID nhóm :"
-                android:textColor="#158ABD"
+                android:textColor="#061A85"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -119,14 +121,16 @@
             android:layout_gravity="center_horizontal"
             android:text="Tham gia"
             android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:background="@drawable/btn_login"
+            app:backgroundTint="@null"/>
 
         <TextView
             android:id="@+id/textView15"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="Nhóm của bạn :"
-            android:textColor="#0C6289"
+            android:textColor="#061A85"
             android:textSize="25sp"
             android:textStyle="bold" />
 

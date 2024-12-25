@@ -41,7 +41,7 @@
                     android:fontFamily="sans-serif"
                     android:text="Ngày"
                     android:textAlignment="center"
-                    android:textColor="#061A85"
+                    android:textColor="#1392CA"
                     android:textSize="24sp"
                     android:textStyle="normal" />
 
@@ -71,7 +71,7 @@
                     android:fontFamily="sans-serif"
                     android:text="Tiền chi"
                     android:textAlignment="center"
-                    android:textColor="#061A85"
+                    android:textColor="#1392CA"
                     android:textSize="24sp"
                     android:textStyle="normal" />
 
@@ -94,7 +94,7 @@
                 android:fontFamily="sans-serif"
                 android:paddingLeft="32dp"
                 android:text="Danh mục"
-                android:textColor="#061A85"
+                android:textColor="#1392CA"
                 android:textSize="16dp"
                 android:textStyle="normal" />
 

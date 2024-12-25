@@ -156,7 +156,7 @@ public class Report extends AppCompatActivity {
                 }
             }
         } catch (ParseException e) {
-            Log.e("Report", "Error parsing date", e);
+            Log.e("Report", "Lỗi khi phân tích ngày", e);
         }
         return 0;
     }
@@ -186,8 +186,8 @@ public class Report extends AppCompatActivity {
         }
     }
     private void handleError(Exception e) {
-        Toast.makeText(this, "Error fetching data", Toast.LENGTH_SHORT).show();
-        Log.e("Report", "Firestore query error", e);
+        Toast.makeText(this, "Lỗi khi lấy dữ liệu", Toast.LENGTH_SHORT).show();
+        Log.e("Report", "Lỗi truy vấn Firestore", e);
     }
 
 

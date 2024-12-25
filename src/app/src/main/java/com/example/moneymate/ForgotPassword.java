@@ -45,7 +45,7 @@ public class ForgotPassword extends AppCompatActivity {
                 if (!TextUtils.isEmpty(strEmail)) {
                     ResetPassword();
                 } else {
-                    edt_email.setError("Email field can't be empty");
+                    edt_email.setError("Trường email không thể để trống");
                 }
             }
         });
@@ -60,7 +60,7 @@ public class ForgotPassword extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(ForgotPassword.this, "Reset Password link has been sent to your registered Email", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ForgotPassword.this, "Liên kết đặt lại mật khẩu đã được gửi đến email đã đăng ký của bạn", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(ForgotPassword.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
@@ -69,7 +69,7 @@ public class ForgotPassword extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ForgotPassword.this, "Error :- " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ForgotPassword.this, "Lỗi :- " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         btn_layma.setVisibility(View.VISIBLE);
                     }
                 });

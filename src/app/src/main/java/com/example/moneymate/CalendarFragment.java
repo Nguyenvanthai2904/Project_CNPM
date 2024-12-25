@@ -115,8 +115,8 @@ public class CalendarFragment extends Fragment {
                         // Fetch expenses after incomes
                         fetchExpensesForDate(date);
                     } else {
-                        Toast.makeText(getContext(), "Failed to fetch incomes: " + incomeTask.getException(), Toast.LENGTH_SHORT).show();
-                        Log.e("CalendarFragment", "Error fetching incomes", incomeTask.getException());
+                        Toast.makeText(getContext(), "Không thể lấy dữ liệu thu nhập: " + incomeTask.getException(), Toast.LENGTH_SHORT).show();
+                        Log.e("CalendarFragment", "Lỗi khi lấy dữ liệu thu nhập", incomeTask.getException());
                     }
                 });
     }
@@ -153,8 +153,8 @@ public class CalendarFragment extends Fragment {
                         // Notify adapter to update ListView
                         adapter.notifyDataSetChanged();
                     } else {
-                        Toast.makeText(getContext(), "Failed to fetch expenses: " + expenseTask.getException(), Toast.LENGTH_SHORT).show();
-                        Log.e("CalendarFragment", "Error fetching expenses", expenseTask.getException());
+                        Toast.makeText(getContext(), "Không thể lấy dữ liệu chi tiêu: " + expenseTask.getException(), Toast.LENGTH_SHORT).show();
+                        Log.e("CalendarFragment", "Lỗi khi lấy dữ liệu chi tiêu", expenseTask.getException());
                     }
                 });
     }

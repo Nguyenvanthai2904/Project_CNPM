@@ -101,11 +101,7 @@ public class group extends AppCompatActivity {
     private void loadGroups() {
         showLoadingIndicator();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) {
-            hideLoadingIndicator();
-            showToast("You are not logged in.");
-            return;
-        }
+
 
         String uid = currentUser.getUid();
         db.collection("users").document(uid).get().addOnCompleteListener(task -> {
@@ -121,15 +117,15 @@ public class group extends AppCompatActivity {
                             loadGroupName(groupId, groupCount);
                         }
                     } else {
-                        showToast("User has no groups yet.");
+                        showToast("Người dùng chưa có nhóm nào.");
                         hideLoadingIndicator();
                     }
                 } else {
-                    showToast("User data not found or no groups exist.");
+                    showToast("Không tìm thấy dữ liệu người dùng hoặc không có nhóm nào tồn tại.");
                     hideLoadingIndicator();
                 }
             } else {
-                showToast("Failed to load groups: " + task.getException().getMessage());
+                showToast("Không thể tải nhóm: " + task.getException().getMessage());
                 hideLoadingIndicator();
             }
         });
@@ -148,10 +144,10 @@ public class group extends AppCompatActivity {
                         runOnUiThread(() -> groupAdapter.notifyDataSetChanged());
                     }
                 } else {
-                    showToast("Group name not found for group ID: " + groupId);
+                    showToast("Không tìm thấy tên nhóm cho ID nhóm: " + groupId);
                 }
             } else {
-                showToast("Failed to load group name: " + task.getException().getMessage());
+                showToast("Không thể tải tên nhóm: " + task.getException().getMessage());
             }
             hideLoadingIndicator();
         });
@@ -163,16 +159,13 @@ public class group extends AppCompatActivity {
 
 
         if (TextUtils.isEmpty(groupName) || TextUtils.isEmpty(groupId)) {
-            showToast("Please fill in all the fields.");
+            showToast("Vui lòng điền tất cả các trường.");
             return;
         }
 
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) {
-            showToast("You are not logged in.");
-            return;
-        }
+
         String uid = currentUser.getUid();
 
         Map<String, Object> groupData = new HashMap<>();
@@ -189,24 +182,24 @@ public class group extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             hideLoadingIndicator();
-                            showToast("Group ID already exists.");
+                            showToast("ID nhóm đã tồn tại.");
                         } else {
                             db.collection("groups").document(groupId)
                                     .set(groupData)
                                     .addOnSuccessListener(aVoid -> {
-                                        showToast("Group created successfully.");
+                                        showToast("Nhóm đã được tạo thành công.");
                                         addGroupToUser(groupId, uid);
                                         clearInputFields();
                                         loadGroups();
                                     })
                                     .addOnFailureListener(e -> {
                                         hideLoadingIndicator();
-                                        showToast("Failed to create group: " + e.getMessage());
+                                        showToast("Tạo nhóm thất bại: " + e.getMessage());
                                     });
                         }
                     } else {
                         hideLoadingIndicator();
-                        showToast("Failed to check group ID: " + task.getException().getMessage());
+                        showToast("Kiểm tra ID nhóm thất bại: " + task.getException().getMessage());
                     }
                 });
     }
@@ -215,13 +208,13 @@ public class group extends AppCompatActivity {
         String groupIdToJoin = joinGroupIdEditText.getText().toString().trim();
 
         if (TextUtils.isEmpty(groupIdToJoin)) {
-            showToast("Please enter a group ID.");
+            showToast("Vui lòng nhập ID nhóm.");
             return;
         }
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
-            showToast("You are not logged in.");
+            showToast("Bạn chưa đăng nhập.");
             return;
         }
         String uid = currentUser.getUid();
@@ -239,21 +232,21 @@ public class group extends AppCompatActivity {
                                     .addOnSuccessListener(aVoid -> {
                                         // Add group to user's groups
                                         addGroupToUser(groupIdToJoin, uid);
-                                        showToast("Successfully joined group.");
+                                        showToast("Tham gia nhóm thành công.");
                                         joinGroupIdEditText.setText("");
                                         loadGroups();
                                     })
                                     .addOnFailureListener(e -> {
                                         hideLoadingIndicator();
-                                        showToast("Failed to join group: " + e.getMessage());
+                                        showToast("Tham gia nhóm thất bại: " + e.getMessage());
                                     });
                         } else {
                             hideLoadingIndicator();
-                            showToast("Group ID does not exist.");
+                            showToast("ID nhóm không tồn tại.");
                         }
                     } else {
                         hideLoadingIndicator();
-                        showToast("Failed to check group ID: " + task.getException().getMessage());
+                        showToast("Kiểm tra ID nhóm thất bại: " + task.getException().getMessage());
                     }
                 });
     }
@@ -262,11 +255,11 @@ public class group extends AppCompatActivity {
         db.collection("users").document(userId)
                 .update("groups", FieldValue.arrayUnion(groupId))
                 .addOnSuccessListener(aVoid -> {
-                    Log.d("group", "Group added to user successfully");
+                    Log.d("group", "Nhóm đã được thêm vào người dùng thành công");
                     hideLoadingIndicator();
                 })
                 .addOnFailureListener(e -> {
-                    showToast("Failed to add group to user: " + e.getMessage());
+                    showToast("Thêm nhóm vào người dùng thất bại: " + e.getMessage());
                     hideLoadingIndicator();
                 });
     }

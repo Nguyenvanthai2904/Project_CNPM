@@ -96,7 +96,7 @@ public class GroupExpensesActivity extends AppCompatActivity {
         Intent intent2 = getIntent();
         groupId = intent2.getStringExtra("groupID");
         if (groupId == null) {
-            Toast.makeText(this, "Error: Group ID not provided.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Lỗi: ID nhóm chưa được cung cấp.", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -167,13 +167,13 @@ public class GroupExpensesActivity extends AppCompatActivity {
                                 // The first member is the group creator
                                 groupCreatorId = members.get(0);
                             } else {
-                                Log.e("FirestoreError", "Group members list is null or empty");
+                                Log.e("FirestoreError", "Danh sách thành viên nhóm là null hoặc trống");
                             }
                         } else {
-                            Log.e("FirestoreError", "Group document does not exist");
+                            Log.e("FirestoreError", "Tài liệu nhóm không tồn tại");
                         }
                     } else {
-                        Log.e("FirestoreError", "Error getting group document: " + task.getException().getMessage());
+                        Log.e("FirestoreError", "Lỗi khi lấy tài liệu nhóm: " + task.getException().getMessage());
                     }
                 });
     }
@@ -259,7 +259,7 @@ public class GroupExpensesActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("FirestoreError", "Error saving expense", e);
+                    Log.e("FirestoreError", "Lỗi khi lưu chi phí", e);
                 });
 
         // Reset input fields and selected service
@@ -278,8 +278,8 @@ public class GroupExpensesActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     List<Map<String, Object>> expensesData = new ArrayList<>();
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        expensesData.add(document.getData());
+                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                        expensesData.add(documentSnapshot.getData());
                     }
 
                     // Sort the expenses by date in descending order
@@ -310,7 +310,8 @@ public class GroupExpensesActivity extends AppCompatActivity {
                             String expense = "Date: " + date + " - Money: " + formattedMoney + "VNĐ" + " - Service: " + service;
                             newExpensesList.add(expense);
                         } else {
-                            Log.w("FirestoreError", "Missing data in document");
+                            // Log details about the problematic document
+                            Log.w("FirestoreError", "Missing data in document. Data: " + data.toString());
                         }
                     }
 
@@ -321,8 +322,8 @@ public class GroupExpensesActivity extends AppCompatActivity {
                     });
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Error loading expenses: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("FirestoreError", "Error loading expenses", e);
+                    Toast.makeText(this, "Lỗi khi tải chi phí: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("FirestoreError", "Lỗi khi tải chi phí", e);
                 });
     }
 
@@ -366,7 +367,7 @@ public class GroupExpensesActivity extends AppCompatActivity {
                                 });
                             })
                             .addOnFailureListener(e -> {
-                                Log.e("FirestoreError", "Error getting total income", e);
+                                Log.e("FirestoreError", "Lỗi khi lấy tổng thu nhập", e);
                                 // Update UI with error values
                                 runOnUiThread(() -> {
                                     edtTongTienGroup.setText("Error");
@@ -376,7 +377,7 @@ public class GroupExpensesActivity extends AppCompatActivity {
                             });
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("FirestoreError", "Error getting total expenses", e);
+                    Log.e("FirestoreError", "Lỗi khi lấy tổng chi phí", e);
                     // Update UI with error values
                     runOnUiThread(() -> {
                         edtTongTienGroup.setText("Error");

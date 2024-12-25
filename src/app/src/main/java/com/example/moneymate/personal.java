@@ -54,12 +54,12 @@ public class personal extends AppCompatActivity {
                 String idToCopy = edtIDcanhan.getText().toString();
                 if (!idToCopy.isEmpty()) {
                     copyToClipboard(idToCopy);
-                    Toast.makeText(personal.this, "ID đã được copy", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(personal.this, "ID đã được sao chép vào bảng tạm", Toast.LENGTH_SHORT).show();
                 }
             });
 
         } else {
-            Toast.makeText(this, "No user signed in", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Chưa có người dùng đăng nhập", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -79,11 +79,11 @@ public class personal extends AppCompatActivity {
                                 Log.d(TAG, "Name: " + name);
                                 Log.d(TAG, "User ID: " + userId);
                             } else {
-                                Log.d(TAG, "No such document");
+                                Log.d(TAG, "Không có tài liệu như vậy");
                             }
                         } else {
-                            Log.w(TAG, "Error getting document", task.getException());
-                            Toast.makeText(personal.this, "Error fetching user data", Toast.LENGTH_SHORT).show();
+                            Log.w(TAG, "Lỗi khi lấy tài liệu", task.getException());
+                            Toast.makeText(personal.this, "Lỗi khi lấy dữ liệu người dùng", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

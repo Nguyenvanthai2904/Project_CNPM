@@ -1,4 +1,4 @@
-package com.example.moneymate;
+package com.example.moneymate.controller.adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
+import com.example.moneymate.R;
+import com.example.moneymate.model.Service;
 
 import java.util.ArrayList;
 

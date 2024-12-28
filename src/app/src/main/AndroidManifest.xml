@@ -16,34 +16,34 @@
         android:theme="@style/Theme.MoneyMate"
         tools:targetApi="31">
         <activity
-            android:name=".incomegroups"
+            android:name=".controller.activity.incomegroups"
             android:exported="false" />
         <activity
             android:name=".Quanli"
             android:exported="false" />
         <activity
-            android:name=".personal"
+            android:name=".controller.activity.personal"
             android:exported="false" />
         <activity
-            android:name=".GroupExpensesActivity"
+            android:name=".controller.activity.GroupExpensesActivity"
             android:exported="false" />
         <activity
-            android:name=".ForgotPassword"
+            android:name=".controller.activity.ForgotPassword"
             android:exported="false" />
         <activity
-            android:name=".Report"
+            android:name=".controller.activity.Export"
             android:exported="false" />
         <activity
-            android:name=".Setting"
+            android:name=".controller.activity.Setting"
             android:exported="false" />
         <activity
-            android:name=".GroupDetailActivity"
+            android:name=".controller.activity.GroupDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".group"
+            android:name=".controller.activity.group"
             android:exported="false" /> <!-- Đặt SplashActivity làm màn hình khởi động -->
         <activity
-            android:name=".SplashActivity"
+            android:name=".controller.activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,13 +52,13 @@
             </intent-filter>
         </activity> <!-- Đặt LoginActivity làm màn hình khởi động -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".controller.activity.LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".SignupActivity"
+            android:name=".controller.activity.SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".controller.activity.MainActivity"
             android:exported="false" />
     </application>
 

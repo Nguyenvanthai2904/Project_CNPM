@@ -1,15 +1,14 @@
-package com.example.moneymate;
+package com.example.moneymate.controller.activity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Switch;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.moneymate.R;
 
 public class Setting extends AppCompatActivity {
 

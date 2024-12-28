@@ -1,4 +1,4 @@
-package com.example.moneymate;
+package com.example.moneymate.controller.activity;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -12,13 +12,13 @@ import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moneymate.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

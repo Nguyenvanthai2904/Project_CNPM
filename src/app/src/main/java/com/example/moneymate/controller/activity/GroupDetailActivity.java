@@ -1,4 +1,4 @@
-package com.example.moneymate;
+package com.example.moneymate.controller.activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moneymate.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,11 +34,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
 import android.content.Intent;
 public class GroupDetailActivity extends AppCompatActivity {
 

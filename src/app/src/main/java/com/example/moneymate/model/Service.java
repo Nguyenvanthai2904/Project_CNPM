@@ -1,4 +1,4 @@
-package com.example.moneymate;
+package com.example.moneymate.model;
 
 public class Service {
     private int image;

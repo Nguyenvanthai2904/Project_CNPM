@@ -1,7 +1,6 @@
-package com.example.moneymate;
+package com.example.moneymate.controller.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +9,14 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
-import android.widget.ListView;
-
 import java.util.ArrayList;
 import androidx.annotation.Nullable;
-import androidx.annotation.NonNull;
+
 import android.widget.TextView;
+
+import com.example.moneymate.R;
+import com.example.moneymate.model.item;
+
 public class MoreMyArrayAdapter extends ArrayAdapter<item>{
     Activity context;
     int Idlayout;

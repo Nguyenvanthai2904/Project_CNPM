@@ -1,4 +1,4 @@
-package com.example.moneymate;
+package com.example.moneymate.controller.activity;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -19,6 +19,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.moneymate.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -33,7 +34,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 
-public class Report extends AppCompatActivity {
+public class Export extends AppCompatActivity {
 
     private Spinner monthSpinner_report;
     private Spinner yearSpinner_report;

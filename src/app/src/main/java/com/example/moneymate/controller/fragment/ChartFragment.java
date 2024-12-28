@@ -1,4 +1,4 @@
-package com.example.moneymate;
+package com.example.moneymate.controller.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.moneymate.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;

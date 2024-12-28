@@ -1,4 +1,4 @@
-package com.example.moneymate;
+package com.example.moneymate.controller.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.moneymate.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;

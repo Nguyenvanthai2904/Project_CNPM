@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:background="@drawable/group"
-    tools:context=".group">
+    tools:context=".controller.activity.group">
 
     <LinearLayout
         android:id="@+id/inputLayout"

@@ -1,25 +1,20 @@
-package com.example.moneymate;
+package com.example.moneymate.controller.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
-import com.example.moneymate.R;
-import androidx.activity.EdgeToEdge;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import com.example.moneymate.R;
+import com.example.moneymate.controller.fragment.CalendarFragment;
+import com.example.moneymate.controller.fragment.ChartFragment;
+import com.example.moneymate.controller.fragment.MoreFragment;
+import com.example.moneymate.controller.fragment.TransactionFragment;
 import com.example.moneymate.databinding.ActivityMainBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 

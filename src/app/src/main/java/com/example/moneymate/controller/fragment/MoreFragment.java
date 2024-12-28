@@ -1,4 +1,4 @@
-package com.example.moneymate;
+package com.example.moneymate.controller.fragment;
 
 import android.os.Bundle;
 
@@ -13,6 +13,14 @@ import java.util.ArrayList;
 import android.widget.AdapterView;
 import android.content.Intent;
 
+import com.example.moneymate.controller.activity.Export;
+import com.example.moneymate.controller.activity.LoginActivity;
+import com.example.moneymate.controller.activity.Setting;
+import com.example.moneymate.controller.adapter.MoreMyArrayAdapter;
+import com.example.moneymate.R;
+import com.example.moneymate.controller.activity.group;
+import com.example.moneymate.controller.activity.personal;
+import com.example.moneymate.model.item;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MoreFragment extends Fragment {
@@ -76,7 +84,7 @@ public class MoreFragment extends Fragment {
                         myIntent = new Intent(getActivity(), group.class);
                         break;
                     case "Báo cáo":
-                        myIntent = new Intent(getActivity(), Report.class);
+                        myIntent = new Intent(getActivity(), Export.class);
                         break;
                     case "Đăng xuất":
                         // Thực hiện đăng xuất

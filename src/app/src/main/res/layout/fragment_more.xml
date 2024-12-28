@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="#F8F4F4"
     android:orientation="vertical"
-    tools:context=".MoreFragment">
+    tools:context=".controller.fragment.MoreFragment">
 
 
     <ImageView

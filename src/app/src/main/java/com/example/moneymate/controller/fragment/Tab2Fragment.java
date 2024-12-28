@@ -1,4 +1,4 @@
-package com.example.moneymate;
+package com.example.moneymate.controller.fragment;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -16,6 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.moneymate.controller.adapter.MyArrayAdapter;
+import com.example.moneymate.R;
+import com.example.moneymate.model.Service;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
